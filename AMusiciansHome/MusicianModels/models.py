@@ -24,21 +24,21 @@ class Tag(models.Model):
     objects = models.ManyToManyField(Object)
 
 class Instr(models.Model):
-    obj = models.ForeignKey(Object, on_delete_models.CASCADE)
+    obj = models.ForeignKey(Object, on_delete=models.CASCADE)
     size = models.CharField(max_length=10)
     maker = models.CharField(max_length=30)
     date_made = models.DateField()
 
 class Supply(models.Model):
-    obj = models.ForeignKey(Object, on_delete_models.CASCADE)
+    obj = models.ForeignKey(Object, on_delete=models.CASCADE)
     maker = models.CharField(max_length=30)
     date_made = models.DateField()
     description = models.CharField(max_length=120)
 
 class Music(models.Model):
-    obj = models.ForeignKey(Object, on_delete_models.CASCADE)
+    obj = models.ForeignKey(Object, on_delete=models.CASCADE)
     num_pages = models.IntegerField()
     title = models.CharField(max_length=30)
     composer = models.CharField(max_length=30)
-    date_pub = models.Date()
+    date_pub = models.DateField()
 
