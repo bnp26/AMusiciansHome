@@ -11,6 +11,10 @@ nav .brand-logo {
   color: #444;
 }
 
+body {
+  background-color: #8C551E;
+}
+
 p {
   line-height: 2rem;
 }
@@ -52,6 +56,40 @@ p {
   font-size: inherit;
 }
 
+.bistre-dark{
+  background-color: #35291C;
+}
+.bistre {
+  background-color: #8C551E;
+}
+.french-bistre {
+  background-color: #936D46;
+}
+.grizzly {
+  background-color: #f2e2d8;
+}
+.tumbleweed {
+  background-color: #E1B07E;
+}
+
+.mahogany {
+  color: #db6f27;
+}
+
+.mahogany-btn {
+  background-color: #db6f27;
+  color: black;
+}
+
+.wood {
+	background-color: #a84f00;
+}
+
+.light-wood {
+  background-color: #c45800;
+}
+
 footer.page-footer {
   margin: 0;
+  background-color: #a84f00;
 }
