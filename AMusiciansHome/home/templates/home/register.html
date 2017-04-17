@@ -16,23 +16,47 @@
     <div class="container">
       <div class="row">
         <div class="col s11 offset-s3">
-          <form class="col s12 m6">
-            <div class="card medium">
+          <form class="col s12 m8 l6" method='post'>
+            {% csrf_token %}
+            <div class="card large">
               <div class="card-content brown-text">
                 <span class="card-title center-align">Register</span>
                 <div class="row">
-                  <div class="input-field col s8 offset-s2">
-                    <input placeholder="Name" id="name" type="text" class="validate">
+                  <div class="input-field col s6">
+                    {{ form.first_name }}
+                  </div>
+                  <div class="input-field col s6">
+                    {{ form.last_name }}
                   </div>
                 </div>
                 <div class="row">
-                  <div class="input-field col s8 offset-s2">
-                    <input placeholder="Email" id="email" type="email" class="validate">
+                  <div class="input-field col s8 offset-s2">  
+                    {{ form.username }}
                   </div>
                 </div>
-                 <div class="row">
-                  <div class="input-field col s8 offset-s2">
-                    <input placeholder="Password" id="password" type="password" class="validate">
+                <div class="row">
+                  <div class="input-field col s8 offset-s2">  
+                    {{ form.email1 }}
+                  </div>
+                </div>
+                <div class="row">
+                  <div class="input-field col s8 offset-s2">  
+                    {{ form.email2 }}
+                  </div>
+                </div>
+                <div class="row">
+                  <div class="input-field col s8 offset-s2">  
+                    {{ form.phone_num }}
+                  </div>
+                </div>
+                <div class="row">
+                  <div class="input-field col s8 offset-s2">  
+                    {{ form.password1 }}
+                  </div>
+                </div>  
+                <div class="row">
+                  <div class="input-field col s8 offset-s2">  
+                    {{ form.password2 }}
                   </div>
                 </div>
               </div>

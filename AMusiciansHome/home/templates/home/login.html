@@ -16,7 +16,8 @@
     <div class="container">
       <div class="row">
         <div class="col s11 offset-s3">
-          <form class="col s12 m6">
+          <form class="col s12 m6" method="post">
+            {% csrf_token %}
             <div class="card medium">
               <div class="card-content brown-text">
                 <span class="card-title center-align">Login</span>
