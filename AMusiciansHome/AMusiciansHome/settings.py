@@ -25,7 +25,8 @@ SECRET_KEY = 'qxxwcz05gu_$nkt*#*-8+i=qor+822v42auase5t+=970u=7ib'
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = ['amusicianshome-bnp26156281.codeanyapp.com',]
+ALLOWED_HOSTS = ['amusicianshome-bnp26156281.codeanyapp.com',
+                'amusicianshome-kieranaulak109483.codeanyapp.com',]
 
 
 # Application definition
