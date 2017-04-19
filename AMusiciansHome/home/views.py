@@ -1,17 +1,16 @@
 from django.contrib.auth import authenticate, login, logout
 from django.contrib.auth.decorators import login_required
-from django.http import HttpResponse
-from django.template import loader
-from django.template import RequestContext, Context
+from django.http import HttpResponse, HttpResponseRedirect
 from django.shortcuts import render, redirect
+from django.template import RequestContext, Context, loader
+from django.core.urlresolvers import reverse
 
-from MusicianModels.models import User
-from MusicianModels.forms import RegistrationForm, LoginForm
+from MusicianModels.forms import RegistrationForm, LoginForm, User
 
 #View for the homepage
 def homepage(request):
     
-    context = RequestContext(request)
+    context = {}
     if request.user.is_authenticated():
         context['username'] = request.user
     template = 'home/home.html'
@@ -26,10 +25,9 @@ def login_page(request):
         password = request.POST['password']
 
         user = authenticate(username=username, password=password)
-        
         if user is not None and user.is_active:
             login(request, user)
-            return redirect('homepage')
+            return HttpResponseRedirect(reverse('home:homepage'))
         else:
             context = {'login': 'failed'}
             print "Invalid login details: {0}, {1}".format(username, password)
@@ -50,7 +48,7 @@ def register_page(request):
             #need to send email
             template = 'home/home.html'
             context = {}
-            return redirect(homepage)
+            return redirect('homepage')
     else:
         template = 'home/register.html'
         form = RegistrationForm ()
