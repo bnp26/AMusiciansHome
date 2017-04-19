@@ -5,11 +5,9 @@ from django.db import models
 
 # Create your models here.
 
-class User(models.Model):
+class Musician(models.Model):
     user = models.OneToOneField(User)
-    first_name = models.CharField(max_length=30)
-    last_name = models.CharField(max_length=30)
-    phone_num = models.CharField(max_length=10)
+    phone_num = models.CharField(max_length=10, blank=False)
 
 class Object(models.Model):
     name = models.CharField(max_length=30)

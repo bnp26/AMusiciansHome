@@ -1,39 +1,43 @@
-from django.shortcuts import render, redirect
-
+from django.contrib.auth import authenticate, login, logout
+from django.contrib.auth.decorators import login_required
 from django.http import HttpResponse
 from django.template import loader
 from django.template import RequestContext, Context
+from django.shortcuts import render, redirect
+
 from MusicianModels.models import User
-from MusicianModels.forms import RegistrationForm
+from MusicianModels.forms import RegistrationForm, LoginForm
 
 #View for the homepage
 def homepage(request):
+    
+    context = RequestContext(request)
+    if request.user.is_authenticated():
+        context['username'] = request.user
     template = 'home/home.html'
-    context = {}
     return render(request, template, context)
 
 #just a plce holder to edit the login page
 def login_page(request):
     request_context = RequestContext(request)
-    context = Context()
+    context = {}    
     if request.method == 'POST':
         username = request.POST['username']
         password = request.POST['password']
 
         user = authenticate(username=username, password=password)
         
-        if user:
-            template = 'home/home.html'
-            context['login': 'success']
-            print "successful login: {0}, {1}".format(username, password)
-            return render(request, template, context)
+        if user is not None and user.is_active:
+            login(request, user)
+            return redirect('homepage')
         else:
             context = {'login': 'failed'}
             print "Invalid login details: {0}, {1}".format(username, password)
             return HttpResponse("Invalid login details supplied.")
     else:
         template = 'home/login.html'
-        context = {}
+        form = LoginForm()
+        context = {'form': form}
         return render(request, template, context)
 
 #place holder for sign up page
@@ -46,9 +50,13 @@ def register_page(request):
             #need to send email
             template = 'home/home.html'
             context = {}
-            return render(request, template, context)
+            return redirect(homepage)
     else:
         template = 'home/register.html'
-        form = RegistrationForm()
+        form = RegistrationForm ()
         context = {'form': form}
         return render(request, template, context)
+@login_required
+def logout_request(request):
+    logout(request)
+    return redirect('homepage')
