@@ -11,7 +11,7 @@ from MusicianModels.forms import RegistrationForm, LoginForm
 #View for the homepage
 def homepage(request):
     
-    context = RequestContext(request)
+    context = {}
     if request.user.is_authenticated():
         context['username'] = request.user
     template = 'home/home.html'
