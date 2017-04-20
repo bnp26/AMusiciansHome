@@ -3,25 +3,33 @@
 {% block content %}
   <ul id="slide-out" class="side-nav">
     <li><div class="userView">
+      <!-- 
       <div class="background">
         <img src="images/office.jpg">
       </div>
-      <a href="#!user"><img class="circle" src="images/yuna.jpg"></a>
-      <a href="#!name"><span class="white-text name">John Doe</span></a>
-      <a href="#!email"><span class="white-text email">jdandturk@gmail.com</span></a>
+     -->
+      <h1 class="header center">Search</h1>
+      <form action="/action_page.php">
+        Enter Keywords: <input type="text" name="fname"><br>
+        Enter Tag: <input type="text" name="lname"><br>
+        <a class="waves-effect waves-light btn">Submit</a>
+      </form>
     </div></li>
-    <li><a href="#!"><i class="material-icons">butt</i>First Link With Icon</a></li>
-    <li><a href="#!">Second Link</a></li>
-    <li><div class="divider"></div></li>
-    <li><a class="subheader">Subheader</a></li>
-    <li><a class="waves-effect" href="#!">Third Link With Waves</a></li>
-  </ul>
+</ul>
   <a href="#" data-activates="slide-out" class="button-collapse"><i class="material-icons">menu</i></a>
-
-    <div class="col s12 m7">
+<div class="row">
+    <div class="col s12">
+      <ul class="tabs">
+        <li class="tab col s3"><a class="active" href="#test1">Instruments</a></li>
+        <li class="tab col s3"><a href="#test2">Music</a></li>
+        <li class="tab col s3"><a href="#test4">Miscellaneous</a></li>
+      </ul>
+    </div>
+  <div id="test1" class="col s12">
+  <div class="col s12 m7">
       <div class="card horizontal small">
         <div class="card-image">
-          <img src="https://static.roland.com/assets/images/products/gallery/v_piano_front_stand_gal.jpg" width ="200">
+          <img src="http://lorempixel.com/100/190/nature/6">
         </div>
         <div class="card-stacked">
           <div class="card-content">
@@ -33,7 +41,7 @@
     <div class="col s12 m7">
     <div class="card horizontal small">
       <div class="card-image">
-        <img src="http://www.schilkemusic.com/wp-content/uploads/2014/09/X3-Gold.jpg" width="50">
+        <img src="http://lorempixel.com/100/190/nature/6">
       </div>
       <div class="card-stacked">
         <div class="card-content">
@@ -42,7 +50,97 @@
       </div>
      </div>
     </div>
-  <ul class="pagination">
+    <div class="col s12 m7">
+      <div class="card horizontal small">
+        <div class="card-image">
+          <img src="http://lorempixel.com/100/190/nature/6">
+        </div>
+        <div class="card-stacked">
+          <div class="card-content">
+            <p>Instrument Data here.</p>
+          </div>
+        </div>
+       </div>
+    </div>
+  </div>
+    <div id="test2" class="col s12">
+  <div class="col s12 m7">
+      <div class="card horizontal small">
+        <div class="card-image">
+          <img src="http://lorempixel.com/100/190/nature/6">
+        </div>
+        <div class="card-stacked">
+          <div class="card-content">
+            <p>Music Data here.</p>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="col s12 m7">
+    <div class="card horizontal small">
+      <div class="card-image">
+        <img src="http://lorempixel.com/100/190/nature/6">
+      </div>
+      <div class="card-stacked">
+        <div class="card-content">
+          <p>Music Data here.</p>
+        </div>
+      </div>
+     </div>
+    </div>
+    <div class="col s12 m7">
+      <div class="card horizontal small">
+        <div class="card-image">
+          <img src="http://lorempixel.com/100/190/nature/6">
+        </div>
+        <div class="card-stacked">
+          <div class="card-content">
+            <p>Music Data here.</p>
+          </div>
+        </div>
+       </div>
+    </div>
+  </div>
+    <div id="test4" class="col s12"><div class="col s12 m7">
+      <div class="card horizontal small">
+        <div class="card-image">
+          <img src="http://lorempixel.com/100/190/nature/6">
+        </div>
+        <div class="card-stacked">
+          <div class="card-content">
+            <p>Misc Data here.</p>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="col s12 m7">
+    <div class="card horizontal small">
+      <div class="card-image">
+        <img src="http://lorempixel.com/100/190/nature/6">
+      </div>
+      <div class="card-stacked">
+        <div class="card-content">
+          <p>Misc Data here.</p>
+        </div>
+      </div>
+     </div>
+    </div>
+    <div class="col s12 m7">
+      <div class="card horizontal small">
+        <div class="card-image">
+          <img src="http://lorempixel.com/100/190/nature/6">
+        </div>
+        <div class="card-stacked">
+          <div class="card-content">
+            <p>Misc Data here.</p>
+          </div>
+        </div>
+       </div>
+    </div>
+  </div>
+  </div>
+    
+  <ul class="pagination center-align">
     <li class="disabled"><a href="#!"><i class="material-icons">chevron_left</i></a></li>
     <li class="active"><a href="#!">1</a></li>
     <li class="waves-effect"><a href="#!">2</a></li>
