@@ -54,11 +54,16 @@ def register_page(request):
         form = RegistrationForm ()
         context = {'form': form}
         return render(request, template, context)
+
 def main_page(request):
     context = {}
     template = 'home/main.html'
     return render(request, template, context)
-    
+
+def user_lib_page(request):
+    context = {}
+    template = 'home/my_library.html'
+    return render(request, template, context)
     
 @login_required
 def logout_request(request):

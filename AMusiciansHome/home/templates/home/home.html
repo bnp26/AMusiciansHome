@@ -1,7 +1,7 @@
 {% extends 'home/base.html' %}
 
-{% block content %}
-  <nav class="french-bistre" role="navigation">
+{% block navbar %}
+<nav class="french-bistre" role="navigation">
     <div class="nav-wrapper container"><a id="logo-container" href="#" class="brand-logo">Logo</a>
       {% if user.is_authenticated %}
       <ul class="right">
@@ -12,21 +12,23 @@
       </ul>
       {% else %}
       <ul class="right hide-on-med-and-down">
-        <li><a href="#">Sign Up</a></li>
+        <li><a class="register_btn" href="{% url 'home:register' %}">Sign Up</a></li>
       </ul>
       <ul class="right hide-on-med-and-down">
         <li><a class="login_btn" href="{% url 'home:login' %}">Login</a></li>
       </ul>
       <ul id="nav-mobile" class="side-nav">
-        <li><a href="#">Sign Up</a></li>
+        <li><a class="register_btn" href="{% url 'home:register' %}">Sign Up</a></li>
       </ul>
       <ul id="nav-mobile" class="side-nav">
-        <li><a href="#">Login</a></li>
+        <li><a class="login_btn" href="{% url 'home:login' %}">Login</a></li>
       </ul>
       {% endif %}
       <a href="#" data-activates="nav-mobile" class="button-collapse"><i class="material-icons">menu</i></a>
     </div>
-  </nav>
+</nav>
+{% endblock %}
+{% block content %}
   <div class="section no-pad-bot bistre" id="index-banner">
     <div class="container">
       <br><br>
