@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+      <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+      <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1.0, user-scalable=no"/>
+      <title>Parallax Template - Materialize</title>
+
+      <!-- CSS  -->
+      {% load static %}
+      <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+      <link href="{% static "home/materialize.min.css" %}" type="text/css" rel="stylesheet" media="screen,projection"/>
+      <link href="{% static "home/home.css" %}" type="text/css" rel="stylesheet" media="screen,projection"/>
+      <link href="{% static "home/login.css" %}" type="text/css" rel="stylesheet" media="screen,projection"/>
+    </head>
+    <body>
+    {% block content %}
+    {% endblock %}
+
+
+    <!--  Scripts-->
+    <script src="https://code.jquery.com/jquery-2.1.1.min.js"></script>
+    <script src="{% static "home/materialize.js" %}"></script>
+    <script src="{% static "home/init.js" %}"></script>
+    <script src="{% static "home/login.js" %}"></script>
+
+    </body>
+</html>
