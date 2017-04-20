@@ -55,7 +55,7 @@ def register_page(request):
         context = {'form': form}
         return render(request, template, context)
 def main_page(request):
-    request_context = {}
+    context = {}
     template = 'home/main.html'
     return render(request, template, context)
     
