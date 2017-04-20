@@ -1,20 +1,47 @@
 {% extends 'home/base.html' %}
 
 {% block content %}
-  <div class="col s12 m7">
-    <h2 class="header">Horizontal Card</h2>
-    <div class="card horizontal">
+  <ul id="slide-out" class="side-nav">
+    <li><div class="userView">
+      <div class="background">
+        <img src="images/office.jpg">
+      </div>
+      <a href="#!user"><img class="circle" src="images/yuna.jpg"></a>
+      <a href="#!name"><span class="white-text name">John Doe</span></a>
+      <a href="#!email"><span class="white-text email">jdandturk@gmail.com</span></a>
+    </div></li>
+    <li><a href="#!"><i class="material-icons">butt</i>First Link With Icon</a></li>
+    <li><a href="#!">Second Link</a></li>
+    <li><div class="divider"></div></li>
+    <li><a class="subheader">Subheader</a></li>
+    <li><a class="waves-effect" href="#!">Third Link With Waves</a></li>
+  </ul>
+  <a href="#" data-activates="slide-out" class="button-collapse"><i class="material-icons">menu</i></a>
+
+    <div class="col s12 m7">
+      <div class="card horizontal small">
+        <div class="card-image">
+          <img src="https://static.roland.com/assets/images/products/gallery/v_piano_front_stand_gal.jpg" width ="200">
+        </div>
+        <div class="card-stacked">
+          <div class="card-content">
+            <p>Instrument Data here.</p>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="col s12 m7">
+    <div class="card horizontal small">
       <div class="card-image">
-        <img src="http://lorempixel.com/100/190/nature/6">
+        <img src="http://www.schilkemusic.com/wp-content/uploads/2014/09/X3-Gold.jpg" width="50">
       </div>
       <div class="card-stacked">
         <div class="card-content">
           <p>Instrument Data here.</p>
         </div>
       </div>
+     </div>
     </div>
-  </div>
-         
   <ul class="pagination">
     <li class="disabled"><a href="#!"><i class="material-icons">chevron_left</i></a></li>
     <li class="active"><a href="#!">1</a></li>
