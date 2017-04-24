@@ -27,7 +27,7 @@ def login_page(request):
         user = authenticate(username=username, password=password)
         if user is not None and user.is_active:
             login(request, user)
-            return HttpResponseRedirect(reverse('home:homepage'))
+            return redirect('/')
         else:
             context = {'login': 'failed'}
             print "Invalid login details: {0}, {1}".format(username, password)
@@ -48,7 +48,7 @@ def register_page(request):
             #need to send email
             template = 'home/home.html'
             context = {}
-            return redirect('homepage')
+            return redirect('/')
     else:
         template = 'home/register.html'
         form = RegistrationForm ()
@@ -64,8 +64,8 @@ def user_lib_page(request):
     context = {}
     template = 'home/my_library.html'
     return render(request, template, context)
-    
+
 @login_required
 def logout_request(request):
     logout(request)
-    return redirect('homepage')
+    return redirect('/')

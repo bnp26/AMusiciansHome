@@ -8,9 +8,18 @@
         <li><a href="{% url 'home:logout' %}">Logout</a></li>    
       </ul>
       <ul class="right">
-        <li><a>Welcome {{ user.first_name }}</a></li>    
+        <li><a href="{% url 'home:my_library' %}">Welcome {{ user.first_name }}</a></li>    
+      </ul>
+      <ul class="right">
+        <li><a href="{% url 'home:my_library' %}">My Library</a></li>    
+      </ul>
+      <ul class="right">
+        <li><a href="{% url 'home:main' %}">Browse</a></li>    
       </ul>
       {% else %}
+      <ul class="right">
+        <li><a href="{% url 'home:main' %}">Browse</a></li>    
+      </ul>
       <ul class="right hide-on-med-and-down">
         <li><a class="register_btn" href="{% url 'home:register' %}">Sign Up</a></li>
       </ul>
