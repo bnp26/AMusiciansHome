@@ -1,13 +1,61 @@
 {% extends 'home/home.html' %}
 
 {% block content %}
-<nav>
-    <div class="nav-wrapper">
-    <a href="#" class="brand-logo">My Library</a>
-    <ul id="nav-mobile" class="right">
-        <li><a href="{% url 'home:home}">Home</a></li>
-        <li><a href="#">Browse</a></li>
-    </ul>
-    </div>
-</nav>
+<style>
+  body{
+    background-color: #157f75
+  }
+</style>
+<h1 class="header center mahogany">My Instruments</h1>
+<ul class="collection">
+    <li class="collection-item avatar">
+      <img src="http://www.schillerinstruments.com/wp-content/uploads/2016/03/trombone-valve-small-1.jpg" alt="" class="circle">
+      <span class="title">Yamaha Trombone</span>
+      <p>First Line <br>
+         Second Line
+      </p>
+      <a href="#!" class="secondary-content"><p>
+        Edit
+        </p></a>
+    </li>
+
+    <li class="collection-item avatar">
+      <img src="http://media.wwbw.com/is/image/MMGS7/BTR-300-Series-Student-Bb-Trumpet-Lacquer/463683000420000-00-500x500.jpg" alt="" class="circle">
+      <span class="title">Trumpet</span>
+      <p>First Line <br>
+         Second Line
+      </p>
+      <a href="#!" class="secondary-content"><p>
+        Edit
+        </p></a>
+    </li>
+    <li class="collection-item avatar">
+      <img src="http://media.guitarcenter.com/is/image/MMGS7/Vision-Birch-Snare-Drum-Black-with-Black-Hardware-14x5.5/583136000001325-00-500x500.jpg" alt="" class="circle">
+      <span class="title">Snare Drum</span>
+      <p>First Line <br>
+         Second Line
+      </p>
+      <a href="#!" class="secondary-content"><p>
+        Edit
+        </p></a>
+    </li>
+  </ul>
+         
+  <!-- Modal Structure -->
+<div class="row section">
+  <div class="col">
+    <!-- Modal Trigger -->
+    <a class="waves-effect waves-light btn modal-trigger" href="#modal1">Add Instrument</a>
+  </div>
+</div>
+<!-- Modal Structure -->
+<div id="modal1" class="modal">
+  <div class="modal-content">
+    <h4>Modal Header</h4>
+    <p>A bunch of text</p>
+  </div>
+  <div class="modal-footer">
+    <a href="#!" class=" modal-action modal-close waves-effect waves-green btn-flat">Agree</a>
+  </div>
+</div>
 {% endblock %}
