@@ -5,6 +5,9 @@
   body{
     background-color: #157f75
   }
+  h4{
+    color: #157f75
+  }
 </style>
 <h1 class="header center mahogany">My Instruments</h1>
 <ul class="collection">
@@ -41,7 +44,6 @@
     </li>
   </ul>
          
-  <!-- Modal Structure -->
 <div class="row section">
   <div class="col">
     <!-- Modal Trigger -->
@@ -51,11 +53,52 @@
 <!-- Modal Structure -->
 <div id="modal1" class="modal">
   <div class="modal-content">
-    <h4>Modal Header</h4>
-    <p>A bunch of text</p>
+    <h4 class="center">Add Instrument</h4>
+     <div class="row">
+    <form class="col s12">
+      <div class="row">
+        <div class="input-field col s12">
+          <input id="last_name" type="text" class="validate">
+          <label for="last_name">Instrument Name</label>
+        </div>
+      </div>
+      <div class="row">
+        <div class="input-field col s12">
+          <input id="password" type="password" class="validate">
+          <label for="password">Maker</label>
+        </div>
+      </div>
+      <div class="row">
+        <div class="input-field col s12">
+          <input id="email" type="email" class="validate">
+          <label for="email">Date Made</label>
+        </div>
+      </div>
+      <div class="row">
+        <div class="input-field col s12">
+          <input id="email" type="email" class="validate">
+          <label for="email">Description</label>
+        </div>
+      </div>
+      <div class="row">
+      <div class="row">
+      <div class="row">
+        <div class="input-field col s12">
+          <input id="email" type="email" class="validate">
+          <label for="email">Estimated Price</label>
+        </div>
+      </div>
+    </form>
+  </div>
   </div>
   <div class="modal-footer">
-    <a href="#!" class=" modal-action modal-close waves-effect waves-green btn-flat">Agree</a>
+    <a href="#!" class=" modal-action modal-close waves-effect waves-green btn-flat">Add</a>
   </div>
 </div>
+<script src="https://code.jquery.com/jquery-2.1.1.min.js"></script>
+<script>
+$(document).ready(function() {
+  $('.modal').modal();
+});
+</script>
 {% endblock %}
