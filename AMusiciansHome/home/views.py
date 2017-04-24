@@ -64,6 +64,11 @@ def user_lib_page(request):
     context = {}
     template = 'home/my_library.html'
     return render(request, template, context)
+  
+def profile_page(request):
+  context = {}
+  template = 'home/profile.html'
+  return render(request, template, context)
 
 @login_required
 def logout_request(request):
