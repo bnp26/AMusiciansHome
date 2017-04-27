@@ -35,14 +35,21 @@
     background-color: #157f75
   }
 </style>
-<ul id="slide-out" class="side-nav">
-    <li><div class="userView">
+<ul class="side-nav fixed tags-nav">
+    <li class="search-wrapper card">
+       <div class="input-field">
+           <label for="search"><i class="material-icons">search</i></label>
+           <input id="search" type="search" name="search" />
+       </div>
+    </li>
+    <li>
+        <div class="userView">
       <!-- 
       <div class="background">
         <img src="images/office.jpg">
       </div>
      -->
-      <h1 class="header center">Search</h1>
+      <h4 class="header center">Search</h4>
       <form action="/action_page.php">
         Select Tags: 
            <ul class="collapsible" data-collapsible="accordion">

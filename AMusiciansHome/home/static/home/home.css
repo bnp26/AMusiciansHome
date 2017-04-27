@@ -93,3 +93,7 @@ footer.page-footer {
   margin: 0;
   background-color: #a84f00;
 }
+
+.tags-nav {
+	width: 200px;
+}

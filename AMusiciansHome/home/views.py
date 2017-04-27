@@ -6,7 +6,8 @@ from django.template import RequestContext, Context, loader
 from django.core.urlresolvers import reverse
 import pdb
 
-from MusicianModels.forms import RegistrationForm, LoginForm, User
+from MusicianModels.forms import RegistrationForm, LoginForm, User, ProfileForm
+from MusicianModels.models import Musician, Object, Tag, Instr, Supply, Music
 
 #View for the homepage
 def homepage(request):
@@ -64,16 +65,36 @@ def main_page(request):
     template = 'home/main.html'
     return render(request, template, context)
 
-
+@login_required
 def user_lib_page(request):
     context = {}
     template = 'home/my_library.html'
     return render(request, template, context)
   
+@login_required
 def profile_page(request):
-    context = {}
-    template = 'home/profile.html'
-    return render(request, template, context)
+    if request.method == 'POST':
+        musician = Musician.objects.get(user=request.user)
+        user = request.user
+        user.first_name = request.POST['first_name']
+        user.last_name = request.POST['last_name']
+        user.email = request.POST['email']
+        user.username = request.POST['username']
+        user.save()
+        musician.phone_num = request.POST['phone_num']
+        musician.save()
+        return redirect('/profile')
+    else:
+        musician = Musician.objects.get(user=request.user)
+        data = {'first_name':musician.user.first_name,
+                'last_name':musician.user.last_name,
+                'email':musician.user.email,
+                'username':musician.user.username,
+                'phone_num':musician.phone_num}
+        form = ProfileForm(data, initial=data)
+        context = {'form':form}
+        template = 'home/profile.html'
+        return render(request, template, context)
 
 @login_required
 def logout_request(request):

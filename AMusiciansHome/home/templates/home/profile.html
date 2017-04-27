@@ -1,5 +1,34 @@
 {% extends 'home/base.html' %}
 
+{% block navbar %}
+<nav class="french-bistre" role="navigation">
+    <div class="nav-wrapper container"><a id="logo-container" href="#" class="brand-logo">Logo</a>
+      {% if user.is_authenticated %}
+      <ul class="right">
+        <li><a href="{% url 'home:logout' %}">Logout</a></li>    
+      </ul>
+      <ul class="right">
+        <li><a>Welcome {{ user.first_name }}</a></li>    
+      </ul>
+      {% else %}
+      <ul class="right hide-on-med-and-down">
+        <li><a class="register_btn" href="{% url 'home:register' %}">Sign Up</a></li>
+      </ul>
+      <ul class="right hide-on-med-and-down">
+        <li><a class="login_btn" href="{% url 'home:login' %}">Login</a></li>
+      </ul>
+      <ul id="nav-mobile" class="side-nav">
+        <li><a class="register_btn" href="{% url 'home:register' %}">Sign Up</a></li>
+      </ul>
+      <ul id="nav-mobile" class="side-nav">
+        <li><a class="login_btn" href="{% url 'home:login' %}">Login</a></li>
+      </ul>
+      {% endif %}
+      <a href="#" data-activates="nav-mobile" class="button-collapse"><i class="material-icons">menu</i></a>
+    </div>
+</nav>
+{% endblock %}
+
 {% block content %}
 <style>
   body{
@@ -17,43 +46,47 @@
 <div class="row">
   <div class="col s12 m20">
     <div class="card">
-      <div class="card-content">
-      <div class="row">
-      <div class="row">
-        <div class="input-field col s6">
-          <input value="Kieran" id="first_name" type="text" readonly>
-          <label for="first_name">First Name</label>
-        </div>
-        <div class="input-field col s6">
-          <input value="Aulak" id="last_name" type="text" readonly>
-          <label for="last_name">Last Name</label>
-        </div>
-      </div>
-      <div class="row">
-        <div class="input-field col s12">
-          <input value="kieranaulak" id="username" type="text" readonly>
-          <label for="username">Username</label>
-        </div>
-      </div>
-      <div class="row">
-        <div class="input-field col s12">
-          <input value="kja53@case.edu" id="email" type="email" readonly>
-          <label for="email">Email</label>
-        </div>
-      </div>
-      <div class="row">
-        <div class="input-field col s12">
-          <input value="(216) 555-1234" id="phoneNum" type="text" readonly>
-          <label for="phoneNum">Phone Number</label>
-        </div>
-      </div>
-  </div>
-
-        <div class="row section center">
-         <div class="col right">
-           <a class="waves-effect waves-light btn">Save</a>
-        </div>
-      </div>
+        <form method="POST">
+          {% csrf_token %}
+          <div class="card-content">
+            <div class="row">
+                <div class="row">
+                    <div class="input-field col s6">
+                        {{ form.first_name }}
+                        <label for="first_name">First Name</label>
+                    </div>
+                    <div class="input-field col s6">
+                        {{ form.last_name }}
+                        <label for="last_name">Last Name</label>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="input-field col s12">
+                        {{ form.username }}
+                        <label for="username">Username</label>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="input-field col s12">
+                        {{ form.email }}
+                        <label for="email">Email</label>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="input-field col s12">
+                        {{ form.phone_num }}
+                        <label for="phoneNum">Phone Number</label>
+                    </div>
+                </div>
+            </div>
+            <div class="card-action">
+                <div class="row section center">
+                    <div class="col right">
+                        <button class="waves-effect waves-light btn" type="submit" name="action">Save</button>
+                    </div>
+                </div>
+            </div>
+        </form>
       </div>
     </div>
   </div>
