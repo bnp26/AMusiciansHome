@@ -8,6 +8,13 @@ from django.db import models
 class Musician(models.Model):
     user = models.OneToOneField(User)
     phone_num = models.CharField(max_length=10, blank=False)
+    
+    @classmethod
+    def create(cls, c_first_name, c_last_name, c_phone_num, c_email, c_username, c_password):
+        c_user = User.objects.create_user(first_name=c_first_name, last_name=c_last_name, email=c_email, username=c_username, password=c_password)
+        musician = cls(phone_num=c_phone_num, user=c_user)
+        
+        return musician
 
 class Object(models.Model):
     name = models.CharField(max_length=30)

@@ -4,6 +4,7 @@ from django.http import HttpResponse, HttpResponseRedirect
 from django.shortcuts import render, redirect
 from django.template import RequestContext, Context, loader
 from django.core.urlresolvers import reverse
+import pdb
 
 from MusicianModels.forms import RegistrationForm, LoginForm, User
 
@@ -43,16 +44,19 @@ def register_page(request):
     request_context = RequestContext(request)
     context = Context()
     if request.method == 'POST':
-        form = RegistrationForm(request.POST) 
-        if form.is_valid():
+        registration_form = RegistrationForm(request.POST)
+        #user['phone_num'] = '2162223333'
+        if registration_form.is_valid():
             #need to send email
+            cleaned_data = registration_form.clean()
+            registration_form.save(cleaned_data)
             template = 'home/home.html'
             context = {}
             return redirect('/')
     else:
         template = 'home/register.html'
-        form = RegistrationForm ()
-        context = {'form': form}
+        musicianForm = RegistrationForm ()
+        context = {'form': musicianForm}
         return render(request, template, context)
 
 def main_page(request):
@@ -60,15 +64,16 @@ def main_page(request):
     template = 'home/main.html'
     return render(request, template, context)
 
+
 def user_lib_page(request):
     context = {}
     template = 'home/my_library.html'
     return render(request, template, context)
   
 def profile_page(request):
-  context = {}
-  template = 'home/profile.html'
-  return render(request, template, context)
+    context = {}
+    template = 'home/profile.html'
+    return render(request, template, context)
 
 @login_required
 def logout_request(request):
