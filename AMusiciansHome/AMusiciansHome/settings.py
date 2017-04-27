@@ -34,10 +34,8 @@ ALLOWED_HOSTS = ['amusicianshome-bnp26156281.codeanyapp.com',
 INSTALLED_APPS = [
     'django.contrib.auth',
     'django.contrib.contenttypes',
-    'django.contrib.sites',
     'django.contrib.messages',
     'django.contrib.sessions',
-    'django.contrib.redirects',
     'django.contrib.admin',
     'django.contrib.staticfiles',
     'AMusiciansHome',
@@ -51,7 +49,6 @@ MIDDLEWARE_CLASSES = [
     'django.middleware.csrf.CsrfViewMiddleware',
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.middleware.common.CommonMiddleware',
-    'django.contrib.redirects.middleware.RedirectFallbackMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
 ]
