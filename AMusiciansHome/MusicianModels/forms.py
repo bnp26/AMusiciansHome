@@ -36,7 +36,6 @@ class RegistrationForm(forms.Form):
         musician.save()
     
     def save(self, data):
-        pdb.set_trace()
         musician = Musician.create(data.get('first_name'), data.get('last_name'), data.get('phone_num'), data.get('email'), data.get('username'), data.get('password1'))
         musician.user.save()
         musician.save()
