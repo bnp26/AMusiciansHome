@@ -42,12 +42,12 @@ class Instr(models.Model):
     obj = models.ForeignKey(Object, on_delete=models.CASCADE)
     size = models.CharField(max_length=10)
     maker = models.CharField(max_length=30)
-    date_made = models.DateField()
+    year_made = models.IntegerField(blank=False)
 
 class Supply(models.Model):
     obj = models.ForeignKey(Object, on_delete=models.CASCADE)
-    maker = models.CharField(max_length=30)
-    date_made = models.DateField()
+    maker = models.CharField(max_length=30, blank=False)
+    year_made = models.IntegerField(blank=True)
     description = models.CharField(max_length=120)
 
 class Music(models.Model):

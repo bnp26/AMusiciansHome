@@ -6,7 +6,7 @@ from django.template import RequestContext, Context, loader
 from django.core.urlresolvers import reverse
 import pdb
 
-from MusicianModels.forms import RegistrationForm, LoginForm, User, ProfileForm, InstrForm
+from MusicianModels.forms import RegistrationForm, LoginForm, User, ProfileForm, InstrForm, SupplyForm, MusicForm
 from MusicianModels.models import Musician, Object, Tag, Instr, Supply, Music
 
 #View for the homepage
@@ -71,9 +71,34 @@ def main_page(request):
 
 @login_required
 def user_lib_page(request):
-    context = {}
-    template = 'home/my_library.html'
-    return render(request, template, context)
+    if request.method == 'POST':
+        supply_form = SupplyForm(request.POST)
+        music_form = MusicForm(request.POST)
+        instr_form = InstrForm(request.POST)
+        if supply_form.is_valid():
+            cleaned_data = supply_form.clean()
+            supply_form.save(cleaned_data)
+        elif music_form.is_valid():
+            cleaned_data = music_form.clean()
+            music_form.save(cleaned_data)
+        elif instr_form.is_valid():
+            cleaned_data = instr_form.clean()
+            instr_form.save(cleaned_data)
+        else:
+            print 'a'
+            #do something
+    else:
+        tags = Tag.objects.all()
+        supply_form = SupplyForm()
+        music_form = MusicForm()
+        instr_form = InstrForm()
+        userId = request.user.id
+        objects = Object.objects.filter(user_id=userId)
+        print objects
+        
+        context = {'instr_form':instr_form, 'supply_form':supply_form, 'music_form':music_form, 'tags':tags}
+        template = 'home/my_library.html'
+        return render(request, template, context)
   
 @login_required
 def profile_page(request):
