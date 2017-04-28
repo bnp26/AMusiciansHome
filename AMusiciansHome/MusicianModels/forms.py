@@ -1,9 +1,12 @@
+from ajax_select import make_ajax_field
+from ajax_select.fields import AutoCompleteSelectMultipleField
+
 from django import forms
 from django.contrib.auth.forms import UserCreationForm
 from django.contrib.auth.models import User
 from django.forms import ModelForm
 import pdb
-from .models import Musician
+from .models import Musician, Object, Instr, Supply, Music, Tag
 
 class LoginForm(forms.Form):
     username = forms.CharField(max_length=18, required=True, help_text='username', widget=forms.TextInput(attrs={'placeholder': 'Username'}))
@@ -44,7 +47,28 @@ class ProfileForm(forms.Form):
     username = forms.CharField(min_length=4, max_length=18, required=True, help_text='Optional.', widget=forms.TextInput(attrs={'placeholder': 'Username', 'class':'validate'}))
     email = forms.EmailField(max_length=254, help_text='Required. Inform a valid email address.', widget=forms.EmailInput(attrs={'placeholder': 'Email', 'class':'validate'}))
     phone_num = forms.CharField(max_length=12, required=True, help_text='phone number', widget=forms.TextInput(attrs={'placeholder': 'Phone Number', 'class':'validate'}))
+
+class InstrForm(forms.Form):
+    name = forms.CharField(max_length=30, required=True, help_text='Optional.', widget=forms.TextInput(attrs={'placeholder': 'First Name', 'class':'validate'}))
+    est_price = forms.IntegerField()
+    date_posted = forms.DateField()
+    post = forms.BooleanField()
+    size = forms.CharField(max_length=10)
+    maker = forms.CharField(max_length=30)
+    date_made = forms.DateField()
+    tags = AutoCompleteSelectMultipleField('tags', required=False, help_text=None)
+
+    def save(self, data):
+        obj = Object(user=data.get('user'), name=data.get('name'), est_price=data.get('est_price'), post=data.get('post'))
+        obj.save()
+        instr = Instr(obj=obj, size=data.get('size'), maker=data.get('maker'), date_made=data.get('date_made'))
+        tags = data.get('tags')
+        for tag in tags:
+            instr.tags.add(tag)
+        instr.save()
         
+        
+
 '''
     first_name = forms.CharField(max_length=30, required=True, help_text='Optional.', widget=forms.TextInput(attrs={'placeholder': 'First Name', 'class':'validate'}))
     last_name = forms.CharField(max_length=30, required=True, help_text='Optional.', widget=forms.TextInput(attrs={'placeholder': 'Last Name', 'class':'validate'}))

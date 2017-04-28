@@ -10,6 +10,12 @@
       <ul class="right">
         <li><a>Welcome {{ user.first_name }}</a></li>    
       </ul>
+      <ul class="right">
+        <li><a href="{% url 'home:my_library' %}">My Library</a></li>    
+      </ul>
+      <ul class="right">
+        <li><a href="{% url 'home:main' %}">Browse</a></li>    
+      </ul>
       {% else %}
       <ul class="right hide-on-med-and-down">
         <li><a class="register_btn" href="{% url 'home:register' %}">Sign Up</a></li>
@@ -36,61 +42,90 @@
   }
 </style>
 <ul class="side-nav fixed tags-nav">
-    <li class="search-wrapper card">
-       <div class="input-field">
-           <label for="search"><i class="material-icons">search</i></label>
-           <input id="search" type="search" name="search" />
-       </div>
-    </li>
     <li>
         <div class="userView">
-      <!-- 
-      <div class="background">
-        <img src="images/office.jpg">
-      </div>
-     -->
-      <h4 class="header center">Search</h4>
-      <form action="/action_page.php">
-        Select Tags: 
-           <ul class="collapsible" data-collapsible="accordion">
-    <li>
-      <div class="collapsible-header">Woodwinds</div>
-      <div class="collapsible-body"> 
-        <ul class="collapsible" data-collapsible="accordion">
-    <li>
-      <div class="collapsible-header">Flute</div>
-      <div class="collapsible-body"><span>Lorem ipsum dolor sit amet.</span></div>
-    </li>
-    <li>
-      <div class="collapsible-header">Piccolo</div>
-      <div class="collapsible-body"><span>Lorem ipsum dolor sit amet.</span></div>
-    </li>
-    <li>
-      <div class="collapsible-header">Clarinet</div>
-      <div class="collapsible-body"><span>Lorem ipsum dolor sit amet.</span></div>
-    </li>
-          <li>
-      <div class="collapsible-header">Saxophone</div>
-      <div class="collapsible-body"><span>Lorem ipsum dolor sit amet.</span></div>
-    </li>
-  </ul>
+            <form method="POST">
+              {% csrf_token %}
+            <li class="search-wrapper card">
+               <div class="input-field">
+                   <label for="search"><i class="material-icons">search</i></label>
+                   {{form.tags}}
+               </div>
+            </li>
+            Select Filters: 
+            <ul class="collapsible" data-collapsible="expandable">
+                <li>
+                    <div class="collapsible-header">Woodwinds</div>
+                    <div class="collapsible-body">
+                        <ul>
+                            {% for tag in tags %}
+                                {% if tag.tag_type == 'Woodwind' %}
+                            <li>
+                                <div class="collapsible-header">
+                                    <input type="checkbox" id="{{ tag.name }}" />
+                                    <label for="{{ tag.name }}">{{ tag.name }}</label></div>
+                                <div class="collapsible-body"><span>{{ tag.name }}</span></div>
+                            </li>
+                                {% endif %}
+                            {% endfor %}
+                        </ul>
+                    </div>
+                </li>
+                <li>
+                  <div class="collapsible-header">Strings</div>
+                  <div class="collapsible-body">
+                        <ul>
+                            {% for tag in tags %}
+                                {% if tag.tag_type == 'String' %}
+                            <li>
+                                <div class="collapsible-header">
+                                    <input type="checkbox" id="{{ tag.name }}" />
+                                    <label for="{{ tag.name }}">{{ tag.name }}</label></div>
+                                <div class="collapsible-body"><span>{{ tag.name }}</span></div>
+                            </li>
+                                {% endif %}
+                            {% endfor %}
+                        </ul>
+                    </div>
+                </li>
+                <li>
+                  <div class="collapsible-header">Brass</div>
+                  <div class="collapsible-body">
+                        <ul>
+                            {% for tag in tags %}
+                                {% if tag.tag_type == 'Brass' %}
+                            <li>
+                                <div class="collapsible-header">
+                                    <input type="checkbox" id="{{ tag.name }}" />
+                                    <label for="{{ tag.name }}">{{ tag.name }}</label></div>
+                                <div class="collapsible-body"><span>{{ tag.name }}</span></div>
+                            </li>
+                                {% endif %}
+                            {% endfor %}
+                        </ul>
+                    </div>
+                </li>
+                <li>
+                  <div class="collapsible-header">Percussion</div>
+                  <div class="collapsible-body">
+                        <ul>
+                            {% for tag in tags %}
+                                {% if tag.tag_type == 'Brass' %}
+                            <li>
+                                <div class="collapsible-header">
+                                    <input type="checkbox" id="{{ tag.name }}" />
+                                    <label for="{{ tag.name }}">{{ tag.name }}</label></div>
+                                <div class="collapsible-body"><span>{{ tag.name }}</span></div>
+                            </li>
+                                {% endif %}
+                            {% endfor %}
+                        </ul>
+                    </div>
+                </li>
+        </ul>
+    </form>
         </div>
     </li>
-    <li>
-      <div class="collapsible-header">Strings</div>
-      <div class="collapsible-body"><span>Lorem ipsum dolor sit amet.</span></div>
-    </li>
-    <li>
-      <div class="collapsible-header">Brass</div>
-      <div class="collapsible-body"><span>Lorem ipsum dolor sit amet.</span></div>
-    </li>
-    <li>
-      <div class="collapsible-header">Percussion</div>
-      <div class="collapsible-body"><span>Lorem ipsum dolor sit amet.</span></div>
-    </li>
-  </ul>
-      </form>
-    </div></li>
 </ul>
   <a href="#" data-activates="slide-out" class="button-collapse"><i class="material-icons">menu</i></a>
 

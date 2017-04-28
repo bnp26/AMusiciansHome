@@ -38,6 +38,7 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.admin',
     'django.contrib.staticfiles',
+    'ajax_select',
     'AMusiciansHome',
     'MusicianModels',
     'home',
@@ -52,6 +53,12 @@ MIDDLEWARE_CLASSES = [
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
 ]
+
+AJAX_LOOKUP_CHANNELS = {
+      # auto-create a channel named 'person' that searches by name on the model Person
+      # str: dict
+      'tags': {'model': 'MusicianModels.Tag', 'search_field': 'name'}
+}
 
 ROOT_URLCONF = 'AMusiciansHome.urls'
 

@@ -6,7 +6,7 @@ from django.template import RequestContext, Context, loader
 from django.core.urlresolvers import reverse
 import pdb
 
-from MusicianModels.forms import RegistrationForm, LoginForm, User, ProfileForm
+from MusicianModels.forms import RegistrationForm, LoginForm, User, ProfileForm, InstrForm
 from MusicianModels.models import Musician, Object, Tag, Instr, Supply, Music
 
 #View for the homepage
@@ -61,7 +61,11 @@ def register_page(request):
         return render(request, template, context)
 
 def main_page(request):
-    context = {}
+    form = InstrForm()
+    tags = Tag.objects.order_by('tag_type')
+    context = {'form':form, 'tags':tags}
+    for tag in tags:
+        print tag.tag_type
     template = 'home/main.html'
     return render(request, template, context)
 
