@@ -1,6 +1,6 @@
 from django.contrib.auth import authenticate, login, logout
 from django.contrib.auth.decorators import login_required
-from django.http import HttpResponse, HttpResponseRedirect
+from django.http import HttpResponse, HttpResponseRedirect, JsonResponse
 from django.shortcuts import render, redirect
 from django.template import RequestContext, Context, loader
 from django.core.urlresolvers import reverse
@@ -44,7 +44,17 @@ def login_page(request):
 def register_page(request):
     request_context = RequestContext(request)
     context = Context()
-    if request.method == 'POST':
+    if request.is_ajax():
+        username = request.GET.get('username', None)
+        email = request.GET.get('email', None)
+        phone_number = request.GET.get('phone_num', None)
+        data = {
+            'username_is_taken': User.objects.filter(username__iexact=username).exists(),
+            'email_is_taken': User.objects.filter(email__iexact=email).exists(),
+            'phone_num_is_taken': Musician.objects.filter(phone_num__iexact=phone_number).exists()
+        }
+        return JsonResponse(data)
+    elif request.method == 'POST':
         registration_form = RegistrationForm(request.POST)
         #user['phone_num'] = '2162223333'
         if registration_form.is_valid():
@@ -78,12 +88,15 @@ def user_lib_page(request):
         if supply_form.is_valid():
             cleaned_data = supply_form.clean()
             supply_form.save(cleaned_data)
+            return redirect('/main')
         elif music_form.is_valid():
             cleaned_data = music_form.clean()
             music_form.save(cleaned_data)
+            return redirect('/main')
         elif instr_form.is_valid():
             cleaned_data = instr_form.clean()
             instr_form.save(cleaned_data)
+            return redirect('/main')
         else:
             print 'a'
             #do something
@@ -96,7 +109,7 @@ def user_lib_page(request):
         objects = Object.objects.filter(user_id=userId)
         print objects
         
-        context = {'instr_form':instr_form, 'supply_form':supply_form, 'music_form':music_form, 'tags':tags}
+        context = {'instr_form':instr_form, 'supply_form':supply_form, 'music_form':music_form, 'tags':tags, 'objects':objects}
         template = 'home/my_library.html'
         return render(request, template, context)
   

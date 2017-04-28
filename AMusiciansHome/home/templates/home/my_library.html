@@ -11,17 +11,18 @@
 </style>
 <h1 class="header center mahogany">My Instruments</h1>
 <ul class="collection">
+    {% for object in objects %}
     <li class="collection-item avatar">
       <img src="http://www.schillerinstruments.com/wp-content/uploads/2016/03/trombone-valve-small-1.jpg" alt="" class="circle">
-      <span class="title">Yamaha Trombone</span>
-      <p>First Line <br>
-         Second Line
+      <span class="title">{{ object.name }}</span>
+      <p>${{ object.est_price }}<br>
+         {{ object.date_posted }}
       </p>
       <a href="#!" class="secondary-content"><p>
         Edit
         </p></a>
     </li>
-
+    {% endfor %}
     <li class="collection-item avatar">
       <img src="http://media.wwbw.com/is/image/MMGS7/BTR-300-Series-Student-Bb-Trumpet-Lacquer/463683000420000-00-500x500.jpg" alt="" class="circle">
       <span class="title">Trumpet</span>
@@ -56,6 +57,7 @@
     <h4 class="center">Add Instrument</h4>
      <div class="row">
     <form class="col s8" method='POST'>
+        {% csrf_token %}
       <div class="row">
         <div class="input-field col s5">
           {{ instr_form.name }}
@@ -78,6 +80,9 @@
         <div class="input-field col s12">
             {{ instr_form.tags }}
         </div>
+      </div>
+      <div class="row">
+          <button class="btn waves-effect waves-light" type="submit" name="action">Add
       </div>
     </form>
   <div class="modal-footer">

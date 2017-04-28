@@ -8,7 +8,7 @@
         <li><a href="{% url 'home:logout' %}">Logout</a></li>    
       </ul>
       <ul class="right">
-        <li><a>Welcome {{ user.first_name }}</a></li>    
+        <li><a href="{% url 'home:profile' %}">Welcome {{ user.first_name }}</a></li>    
       </ul>
       <ul class="right">
         <li><a href="{% url 'home:my_library' %}">My Library</a></li>    
