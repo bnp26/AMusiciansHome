@@ -51,7 +51,7 @@ class InstrForm(forms.Form):
     #Object
     name = forms.CharField(max_length=30, required=True, help_text='Optional.', widget=forms.TextInput(attrs={'placeholder': 'Instrument Name', 'class':'validate'}))
     est_price = forms.IntegerField(required=True, widget=forms.NumberInput(attrs={'placeholder':0, 'class':'validate'}))
-    date_posted = forms.DateField()
+    #date_posted = forms.DateField()
     post = forms.BooleanField(required=True, widget=forms.CheckboxInput())
     #Instrument
     size = forms.CharField(max_length=30, required=True, help_text='Optional.', widget=forms.TextInput(attrs={'placeholder': 'Size Description', 'class':'validate'}))
@@ -62,7 +62,7 @@ class InstrForm(forms.Form):
     def save(self, data):
         obj = Object(user=data.get('user'), name=data.get('name'), est_price=data.get('est_price'), post=data.get('post'))
         obj.save()
-        instr = Instr(obj=obj, size=data.get('size'), maker=data.get('maker'), date_made=data.get('date_made'))
+        instr = Instr(obj=obj, size=data.get('size'), maker=data.get('maker'), year_made=data.get('year_made'))
         tags = data.get('tags')
         for tag in tags:
             instr.tags.add(tag)
@@ -72,7 +72,7 @@ class SupplyForm(forms.Form):
     #Object
     name = forms.CharField(max_length=30, required=True, help_text='Optional.', widget=forms.TextInput(attrs={'placeholder': 'Instrument Name', 'class':'validate'}))
     est_price = forms.IntegerField(required=True, widget=forms.NumberInput(attrs={'placeholder':0, 'class':'validate'}))
-    date_posted = forms.DateField()
+#    date_posted = forms.DateField()
     post = forms.BooleanField(required=True, widget=forms.CheckboxInput())
     #Supply
     maker = forms.CharField(max_length=30, required=True, help_text='Optional.', widget=forms.TextInput(attrs={'placeholder': 'Supply Name', 'class':'validate'}))
@@ -93,7 +93,7 @@ class MusicForm(forms.Form):
     #Object
     name = forms.CharField(max_length=30, required=True, help_text='Optional.', widget=forms.TextInput(attrs={'placeholder': 'Instrument Name', 'class':'validate'}))
     est_price = forms.IntegerField(required=True, widget=forms.NumberInput(attrs={'placeholder':0, 'class':'validate'}))
-    date_posted = forms.DateField()
+    #date_posted = forms.DateField()
     post = forms.BooleanField(required=True, widget=forms.CheckboxInput())
     #Music
     title = forms.CharField(max_length=30, required=True, help_text='Optional.', widget=forms.TextInput(attrs={'placeholder': 'Title', 'class':'validate'}))

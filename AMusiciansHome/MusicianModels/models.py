@@ -1,5 +1,3 @@
-from __future__ import unicode_literals
-import django
 from django.contrib.auth.models import User
 from django.db import models
 
@@ -25,35 +23,49 @@ class Tag(models.Model):
 
     def __str__(self):              # __unicode__ on Python 2
         return self.name
-
+    
+    class Meta:
+        ordering = ('name',)
 
 class Object(models.Model):
     name = models.CharField(max_length=30)
     user = models.ForeignKey(User, on_delete=models.CASCADE)
     est_price = models.IntegerField()
-    date_posted = models.DateTimeField(default=django.utils.timezone.now(), blank=True)
+    date_posted = models.DateField(auto_now=True)
     post = models.BooleanField()
     tags = models.ManyToManyField(Tag, blank=True)
     
     def __str__(self):              # __unicode__ on Python 2
         return self.name
     
+    class Meta:
+        ordering = ('name',)
+
 class Instr(models.Model):
     obj = models.ForeignKey(Object, on_delete=models.CASCADE)
     size = models.CharField(max_length=10)
     maker = models.CharField(max_length=30)
     year_made = models.IntegerField(blank=False)
+    
+    def __str__(self):              # __unicode__ on Python 2
+        return self.obj.name
 
 class Supply(models.Model):
     obj = models.ForeignKey(Object, on_delete=models.CASCADE)
     maker = models.CharField(max_length=30, blank=False)
     year_made = models.IntegerField(blank=True)
     description = models.CharField(max_length=120)
+    
+    def __str__(self):              # __unicode__ on Python 2
+        return self.obj.name
 
 class Music(models.Model):
     obj = models.ForeignKey(Object, on_delete=models.CASCADE)
     num_pages = models.IntegerField()
     title = models.CharField(max_length=30)
     composer = models.CharField(max_length=30)
-    date_pub = models.DateField()
+    year_pub = models.IntegerField(blank=True, default=1905)
+    
+    def __str__(self):              # __unicode__ on Python 2
+        return self.obj.name
 
