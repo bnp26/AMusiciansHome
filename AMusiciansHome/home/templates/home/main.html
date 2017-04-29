@@ -41,16 +41,30 @@
     background-color: #157f75
   }
 </style>
+
+<h1 class="header center mahogany" style="margin-left: 200px;">Browse</h1>
+<div class="row" style="margin-left: 200px;">
+    <div class="col s12">
+      <ul class="tabs">
+        <li class="tab col s4"><a class="active" href="#test1">Instruments</a></li>
+        <li class="tab col s4"><a href="#test2">Music</a></li>
+        <li class="tab col s4"><a href="#test4">Miscellaneous</a></li>
+      </ul>
+    </div>
+
 <ul class="side-nav fixed tags-nav">
     <li>
         <div class="userView">
             <form method="POST">
               {% csrf_token %}
             <li class="search-wrapper card">
-               <div class="input-field">
-                   <label for="search"><i class="material-icons">search</i></label>
-                   {{form.tags}}
-               </div>
+             <div class="input-field">
+               <input id="search" type="search">
+               {% for tag in tags %}
+               
+               {% endfor %}
+               <label class="label-icon left" for="search"><i class="material-icons">search</i></label>
+             </div>
             </li>
             Select Filters: 
             <ul class="collapsible" data-collapsible="expandable">
@@ -59,7 +73,7 @@
                     <div class="collapsible-body">
                         <ul>
                             {% for tag in tags %}
-                                {% if tag.tag_type == 'Woodwind' %}
+                                {% if tag.tag_type == 'Wind' %}
                             <li>
                                 <div class="collapsible-header">
                                     <input type="checkbox" id="{{ tag.name }}" />
@@ -127,16 +141,4 @@
         </div>
     </li>
 </ul>
-  <a href="#" data-activates="slide-out" class="button-collapse"><i class="material-icons">menu</i></a>
-
-<h1 class="header center mahogany">Browse</h1>
-<div class="row">
-    <div class="col s12">
-      <ul class="tabs">
-        <li class="tab col s4"><a class="active" href="#test1">Instruments</a></li>
-        <li class="tab col s4"><a href="#test2">Music</a></li>
-        <li class="tab col s4"><a href="#test4">Miscellaneous</a></li>
-      </ul>
-    </div>
-
 {% endblock %}

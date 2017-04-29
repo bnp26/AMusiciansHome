@@ -74,8 +74,6 @@ def main_page(request):
     form = InstrForm()
     tags = Tag.objects.order_by('tag_type')
     context = {'form':form, 'tags':tags}
-    for tag in tags:
-        print tag.tag_type
     template = 'home/main.html'
     return render(request, template, context)
 
@@ -99,6 +97,7 @@ def user_lib_page(request):
             return redirect('/main')
         else:
             print 'a'
+            return None
             #do something
     else:
         tags = Tag.objects.all()
@@ -107,7 +106,6 @@ def user_lib_page(request):
         instr_form = InstrForm()
         userId = request.user.id
         objects = Object.objects.filter(user_id=userId)
-        print objects
         
         context = {'instr_form':instr_form, 'supply_form':supply_form, 'music_form':music_form, 'tags':tags, 'objects':objects}
         template = 'home/my_library.html'

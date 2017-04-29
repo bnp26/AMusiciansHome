@@ -57,7 +57,6 @@ class InstrForm(forms.Form):
     size = forms.CharField(max_length=30, required=True, help_text='Optional.', widget=forms.TextInput(attrs={'placeholder': 'Size Description', 'class':'validate'}))
     maker = forms.CharField(max_length=30, required=True, help_text='Optional.', widget=forms.TextInput(attrs={'placeholder': 'Maker', 'class':'validate'}))
     year_made = forms.IntegerField(required=True, widget=forms.NumberInput(attrs={'placeholder':'Year Made', 'class':'validate'}))
-    tags = AutoCompleteSelectMultipleField('tags', required=False, help_text=None)
 
     def save(self, data):
         obj = Object(user=data.get('user'), name=data.get('name'), est_price=data.get('est_price'), post=data.get('post'))
@@ -70,12 +69,12 @@ class InstrForm(forms.Form):
         
 class SupplyForm(forms.Form):
     #Object
-    name = forms.CharField(max_length=30, required=True, help_text='Optional.', widget=forms.TextInput(attrs={'placeholder': 'Instrument Name', 'class':'validate'}))
+    name = forms.CharField(max_length=30, required=True, help_text='Optional.', widget=forms.TextInput(attrs={'placeholder': 'Supply Name', 'class':'validate'}))
     est_price = forms.IntegerField(required=True, widget=forms.NumberInput(attrs={'placeholder':0, 'class':'validate'}))
 #    date_posted = forms.DateField()
     post = forms.BooleanField(required=True, widget=forms.CheckboxInput())
     #Supply
-    maker = forms.CharField(max_length=30, required=True, help_text='Optional.', widget=forms.TextInput(attrs={'placeholder': 'Supply Name', 'class':'validate'}))
+    maker = forms.CharField(max_length=30, required=True, help_text='Optional.', widget=forms.TextInput(attrs={'placeholder': 'Maker', 'class':'validate'}))
     year_made = forms.IntegerField(required=False, widget=forms.NumberInput(attrs={'placeholder':'Year Made', 'class':'validate'}))
     description = forms.CharField(max_length=120, required=True, help_text='Optional.', widget=forms.TextInput(attrs={'placeholder': 'Description', 'class':'validate'}))
     tags = AutoCompleteSelectMultipleField('tags', required=False, help_text=None)
@@ -91,12 +90,12 @@ class SupplyForm(forms.Form):
 
 class MusicForm(forms.Form):
     #Object
-    name = forms.CharField(max_length=30, required=True, help_text='Optional.', widget=forms.TextInput(attrs={'placeholder': 'Instrument Name', 'class':'validate'}))
+    name = forms.CharField(max_length=30, required=True, help_text='Optional.', widget=forms.TextInput(attrs={'placeholder': 'Title', 'class':'validate'}))
     est_price = forms.IntegerField(required=True, widget=forms.NumberInput(attrs={'placeholder':0, 'class':'validate'}))
     #date_posted = forms.DateField()
     post = forms.BooleanField(required=True, widget=forms.CheckboxInput())
     #Music
-    title = forms.CharField(max_length=30, required=True, help_text='Optional.', widget=forms.TextInput(attrs={'placeholder': 'Title', 'class':'validate'}))
+    title = forms.CharField(max_length=30, required=True, help_text='Optional.', widget=forms.TextInput(attrs={'placeholder': 'Secondary Title', 'class':'validate'}))
     composer = forms.CharField(max_length=30, required=True, help_text='Optional.', widget=forms.TextInput(attrs={'placeholder': 'Composer', 'class':'validate'}))
     num_pages = forms.IntegerField(required=False, widget=forms.NumberInput(attrs={'placeholder':'Number of Pages', 'class':'validate'}))
     date_pub = forms.DateField(required=False, widget=forms.DateInput(attrs={'placeholder':'Date Published', 'class':'validate'}))
