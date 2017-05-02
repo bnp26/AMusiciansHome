@@ -138,23 +138,15 @@ def user_lib_page(request):
         elif 'supply' in request.POST:
             supply_form = SupplyForm(request.POST)
             if supply_form.is_valid():
-                supply_data = {'maker':request.POST['maker'],
-                       'year_made':request.POST['year_made'],
-                       'description':request.POST['description'],
-                       'name':request.POST['name']}
-                supply_data.append(obj_data)
                 cleaned_data = supply_form.clean()
+                cleaned_data['user'] = request.user
                 supply_form.save(cleaned_data)
                 return redirect('/library')
         elif 'music' in request.POST:
             music_form = MusicForm(request.POST)
             if music_form.is_valid():
-                music_data = {'title':request.POST['title'],
-                     'composer':request.POST['composer'],
-                     'num_pages':request.POST['num_pages'],
-                     'year_pub':request.POST['year_pub']}
-                music_data.append(obj_data)
                 cleaned_data = music_form.clean()
+                cleaned_data['user'] = request.user
                 music_form.save(cleaned_data)
                 return redirect('/library')
         else:

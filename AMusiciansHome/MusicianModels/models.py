@@ -30,7 +30,7 @@ class Tag(models.Model):
 
 class Object(models.Model):
     id = models.AutoField(primary_key=True)
-    name = models.CharField(max_length=30)
+    name = models.CharField(max_length=60)
     user = models.ForeignKey(User, on_delete=models.CASCADE)
     est_price = models.IntegerField()
     date_posted = models.DateField(auto_now=True)

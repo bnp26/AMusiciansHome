@@ -209,10 +209,15 @@
               {{ music_form.title }}
               <label for="music_name">Name</label>
             </div>
-            <div class="input-field col s5 offset-s1">
+            <div class="input-field col s4">
               {{ music_form.composer }}
               <label for="music_maker">Composer</label>
             </div>
+            <div class="input-field col s2">
+              {{ music_form.num_pages }}
+              <label for="num_pages"># Pages</label>
+            </div>
+            
           </div>
           <div class="row">
             <div class="input-field col s3">
@@ -241,7 +246,7 @@
             </div>
           </div>
           <div class="row">
-              <input class="btn waves-effect waves-light" type="submit" name="music" value="Add">
+              <input class="btn waves-effect waves-light" type="submit" name="music">
           </div>
         </form>
     </div>

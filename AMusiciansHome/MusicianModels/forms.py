@@ -80,7 +80,7 @@ class SupplyForm(ModelForm):
     est_price = forms.IntegerField(required=True, widget=forms.NumberInput(attrs={'placeholder':0, 'class':'validate'}))
 #    date_posted = forms.DateField()
     post = forms.BooleanField(widget=forms.CheckboxInput(attrs={'type':'checkbox'}))
-    tags = forms.MultipleChoiceField(widget=forms.Select(attrs={'name':'', 'multiple':'', 'placeholder':'Add Tags'}), required=False)
+    tags = forms.ChoiceField(widget=forms.Select(attrs={'multiple':'', 'placeholder':'Add Tags'}), required=False)
     
     class Meta:
         model = Supply
@@ -108,7 +108,7 @@ class MusicForm(ModelForm):
     est_price = forms.IntegerField(required=True, widget=forms.NumberInput(attrs={'placeholder':0, 'class':'validate'}))
     #date_posted = forms.DateField()
     post = forms.BooleanField(required=True, widget=forms.CheckboxInput(attrs={'type':'checkbox'}))
-    tags = forms.MultipleChoiceField(widget=forms.SelectMultiple(attrs={'name':'', 'multiple':'', 'placeholder':'Add Tags'}), required=False)
+    tags = forms.ChoiceField(widget=forms.Select(attrs={'multiple':'', 'placeholder':'Add Tags'}), required=False)
     
     class Meta:
         model = Music
@@ -117,12 +117,13 @@ class MusicForm(ModelForm):
     def save(self, data):
         user = data.get('user')
         new_user = User.objects.get(username=user.get_username())
-        tag = [Tag.objects.get(id=int(data.get('tags'))),]
-        obj = Object(user=new_user, name= data.get('title') + ' ' + data.get('composer'), est_price=data.get('est_price'), post=data.get('post'))
+        tags_list = data.get('tags')
+        tag = [Tag.objects.get(id=int(tags_list)),]
+        obj = Object(user=new_user, name=data.get('title') + ' ' + data.get('composer'), est_price=data.get('est_price'), post=data.get('post'))
         obj.save()
         obj.tags = tag
         obj.save()
-        music = Music(obj=obj, title=data.get('title'), composer=data.get('composer'), num_pages=data.get('num_pages'), date_pub=data.get('date_pub'))
+        music = Music(obj=obj, title=data.get('title'), composer=data.get('composer'), num_pages=data.get('num_pages'), year_pub=data.get('year_pub'))
         music.save()
     
     def __init__(self, *args, **kwargs):
