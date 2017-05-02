@@ -74,17 +74,18 @@ class InstrForm(ModelForm):
         super(InstrForm, self).__init__(*args, **kwargs)
         self.fields['tags'].choices = [(x.pk, x.name) for x in Tag.objects.all()] 
 
-class SupplyForm(forms.Form):
-    
-    class Meta:
-        model = Instr
-        fields = ['maker', 'year_made', 'description']
+class SupplyForm(ModelForm):
     #Object
     name = forms.CharField(max_length=30, required=True, help_text='Optional.', widget=forms.TextInput(attrs={'placeholder': 'Supply Name', 'class':'validate'}))
     est_price = forms.IntegerField(required=True, widget=forms.NumberInput(attrs={'placeholder':0, 'class':'validate'}))
 #    date_posted = forms.DateField()
     post = forms.BooleanField(widget=forms.CheckboxInput(attrs={'type':'checkbox'}))
     tags = forms.MultipleChoiceField(widget=forms.Select(attrs={'name':'', 'multiple':'', 'placeholder':'Add Tags'}), required=False)
+    
+    class Meta:
+        model = Supply
+        fields = ['maker', 'year_made', 'description']
+    
     
     def save(self, data):
         user = data.get('user')
@@ -102,16 +103,16 @@ class SupplyForm(forms.Form):
         super(SupplyForm, self).__init__(*args, **kwargs)
         self.fields['tags'].choices = [(x.pk, x.name) for x in Tag.objects.all()] 
         
-class MusicForm(forms.Form):
-    class Meta:
-        model = Instr
-        fields = ['title', 'composer', 'num_pages', 'year_pub']
-    
-    #Object
+class MusicForm(ModelForm):
+     #Object
     est_price = forms.IntegerField(required=True, widget=forms.NumberInput(attrs={'placeholder':0, 'class':'validate'}))
     #date_posted = forms.DateField()
     post = forms.BooleanField(required=True, widget=forms.CheckboxInput(attrs={'type':'checkbox'}))
     tags = forms.MultipleChoiceField(widget=forms.SelectMultiple(attrs={'name':'', 'multiple':'', 'placeholder':'Add Tags'}), required=False)
+    
+    class Meta:
+        model = Music
+        fields = ['title', 'composer', 'num_pages', 'year_pub']
     
     def save(self, data):
         user = data.get('user')

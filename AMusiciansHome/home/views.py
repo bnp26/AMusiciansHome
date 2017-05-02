@@ -107,7 +107,8 @@ def main_page(request):
     supplies = Supply.objects.filter(obj__post=True)
     object_num = Object.objects.all().distinct().values('user_id').annotate(user_count=Count('user_id')).filter(user_count__gt=1).order_by('user_id').count()
     for_all_query = Object.objects.all().distinct().values('user_id').annotate(user_count=Count('user_id')).filter(user_count__gt=5).order_by('user_id')
-    
+    istr_objs = Object.objects.all().filter().values('user_id').annotate(user_count=Count('user_id')).filter(user_count__gt=5).order_by('user_id')
+    #flute_query = Object.objects.raw('SELECT U.username FROM auth_user U, MusicianModels_object O1, MusicianModels_tag T1, MusicianModels_object_tags OT1 WHERE U.id = O.user_id AND O.id = OT1.object_id AND OT1.tag_id = T1.tag_id AND T1.name = "Flute" AND NOT EXISTS (SELECT U.username FROM auth_user U, MusicianModels_tag T, MusicianModels_object O, MusicianModels_object_tags OT WHERE U.id = O.user_id AND O.id =  OT.object_id AND T.id = OT.tag_id AND T.name != "Flute")')
     users_for_all = []
     for user in for_all_query:
         users_for_all.append(User.objects.get(id=user['user_id']))
