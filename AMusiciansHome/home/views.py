@@ -1,5 +1,7 @@
 from django.contrib.auth import authenticate, login, logout
 from django.contrib.auth.decorators import login_required
+from django.core import serializers
+from django.db.models import Count
 from django.http import HttpResponse, HttpResponseRedirect, JsonResponse
 from django.shortcuts import render, redirect
 from django.template import RequestContext, Context, loader
@@ -61,7 +63,6 @@ def register_page(request):
             #need to send email
             cleaned_data = registration_form.clean()
             registration_form.save(cleaned_data)
-            template = 'home/home.html'
             context = {}
             return redirect('/')
     else:
@@ -71,43 +72,105 @@ def register_page(request):
         return render(request, template, context)
 
 def main_page(request):
-    form = InstrForm()
+    if request.is_ajax():
+        instrs = []
+        supplies = []
+        music = []
+        try:
+            tagged = request.GET['selected_tags']
+            if tagged == "":
+                instrs = list(Instr.objects.filter(obj__post=True))
+                supplies = list(Supply.objects.filter(obj__post=True))
+                music = list(Music.objects.filter(obj__post=True))
+            else:
+                tags_str = tagged.split(',')
+                for string in tags_str:
+                    if string == "":
+                        break
+                    instrs = list(Instr.objects.filter(obj__post=True, obj__tags=Tag.objects.filter(name=string)))
+                    supplies = list(Supply.objects.filter(obj__post=True, obj__tags=Tag.objects.filter(name=string)))
+                    music = list(Music.objects.filter(obj__post=True, obj__tags=Tag.objects.filter(name=string)))
+        except:
+            instrs = list(Instr.objects.filter(obj__post=True))
+            supplies = list(Supply.objects.filter(obj__post=True))
+            music = list(Music.objects.filter(obj__post=True))
+            
+        print instrs
+        print supplies
+        print music
+        context = {"instruments":instrs, "supplies":supplies, "music":music}
+        template = 'home/browser_body.html'
+
+        return render(request, template, context)
+    
+    instruments = Instr.objects.filter(obj__post=True)
+    supplies = Supply.objects.filter(obj__post=True)
+    object_num = Object.objects.all().distinct().values('user_id').annotate(user_count=Count('user_id')).filter(user_count__gt=1).order_by('user_id').count()
+    for_all_query = Object.objects.all().distinct().values('user_id').annotate(user_count=Count('user_id')).filter(user_count__gt=5).order_by('user_id')
+    
+    users_for_all = []
+    for user in for_all_query:
+        users_for_all.append(User.objects.get(id=user['user_id']))
+    
+    music = Music.objects.filter(obj__post=True)
+    print instruments
+   
     tags = Tag.objects.order_by('tag_type')
-    context = {'form':form, 'tags':tags}
+    context = {'tags':tags, 'instruments':instruments, 'supplies':supplies, 'music':music, 'num_objs':object_num, 'for_all':users_for_all}
     template = 'home/main.html'
     return render(request, template, context)
 
 @login_required
 def user_lib_page(request):
     if request.method == 'POST':
-        supply_form = SupplyForm(request.POST)
-        music_form = MusicForm(request.POST)
-        instr_form = InstrForm(request.POST)
-        if supply_form.is_valid():
-            cleaned_data = supply_form.clean()
-            supply_form.save(cleaned_data)
-            return redirect('/main')
-        elif music_form.is_valid():
-            cleaned_data = music_form.clean()
-            music_form.save(cleaned_data)
-            return redirect('/main')
-        elif instr_form.is_valid():
-            cleaned_data = instr_form.clean()
-            instr_form.save(cleaned_data)
-            return redirect('/main')
+        if 'instrument' in request.POST:
+            instr_form = InstrForm(request.POST)
+            print instr_form.errors
+            print instr_form.is_valid()
+            if instr_form.is_valid():
+                cleaned_data = instr_form.clean()
+                cleaned_data['user'] = request.user
+                instr_form.save(cleaned_data)
+                return redirect('/library')
+            else:
+                return redirect('/library')
+        elif 'supply' in request.POST:
+            supply_form = SupplyForm(request.POST)
+            if supply_form.is_valid():
+                supply_data = {'maker':request.POST['maker'],
+                       'year_made':request.POST['year_made'],
+                       'description':request.POST['description'],
+                       'name':request.POST['name']}
+                supply_data.append(obj_data)
+                cleaned_data = supply_form.clean()
+                supply_form.save(cleaned_data)
+                return redirect('/library')
+        elif 'music' in request.POST:
+            music_form = MusicForm(request.POST)
+            if music_form.is_valid():
+                music_data = {'title':request.POST['title'],
+                     'composer':request.POST['composer'],
+                     'num_pages':request.POST['num_pages'],
+                     'year_pub':request.POST['year_pub']}
+                music_data.append(obj_data)
+                cleaned_data = music_form.clean()
+                music_form.save(cleaned_data)
+                return redirect('/library')
         else:
-            print 'a'
-            return None
-            #do something
+            return redirect('/library')    
     else:
         tags = Tag.objects.all()
         supply_form = SupplyForm()
         music_form = MusicForm()
         instr_form = InstrForm()
         userId = request.user.id
-        objects = Object.objects.filter(user_id=userId)
         
-        context = {'instr_form':instr_form, 'supply_form':supply_form, 'music_form':music_form, 'tags':tags, 'objects':objects}
+        instrs = Instr.objects.filter(obj__user_id=userId)
+        supplies = list(Supply.objects.filter(obj__user_id=userId))
+        music = list(Music.objects.filter(obj__user_id=userId))
+        
+        obj_count = Object.objects.filter(user_id=userId).count()
+        context = {'instr_form':instr_form, 'supply_form':supply_form, 'music_form':music_form, 'tags':tags, 'instruments':instrs, 'supplies':supplies, 'music':music, 'obj_count':obj_count}
         template = 'home/my_library.html'
         return render(request, template, context)
   

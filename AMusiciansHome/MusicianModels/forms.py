@@ -47,69 +47,86 @@ class ProfileForm(forms.Form):
     email = forms.EmailField(max_length=254, help_text='Required. Inform a valid email address.', widget=forms.EmailInput(attrs={'placeholder': 'Email', 'class':'validate'}))
     phone_num = forms.CharField(max_length=12, required=True, help_text='phone number', widget=forms.TextInput(attrs={'placeholder': 'Phone Number', 'class':'validate'}))
 
-class InstrForm(forms.Form):
-    #Object
+class InstrForm(ModelForm):
     name = forms.CharField(max_length=30, required=True, help_text='Optional.', widget=forms.TextInput(attrs={'placeholder': 'Instrument Name', 'class':'validate'}))
     est_price = forms.IntegerField(required=True, widget=forms.NumberInput(attrs={'placeholder':0, 'class':'validate'}))
     #date_posted = forms.DateField()
     post = forms.BooleanField(required=True, widget=forms.CheckboxInput())
-    #Instrument
-    size = forms.CharField(max_length=30, required=True, help_text='Optional.', widget=forms.TextInput(attrs={'placeholder': 'Size Description', 'class':'validate'}))
-    maker = forms.CharField(max_length=30, required=True, help_text='Optional.', widget=forms.TextInput(attrs={'placeholder': 'Maker', 'class':'validate'}))
-    year_made = forms.IntegerField(required=True, widget=forms.NumberInput(attrs={'placeholder':'Year Made', 'class':'validate'}))
-
+    tags = forms.ChoiceField(widget=forms.Select(attrs={'multiple':'', 'placeholder':'Add Tags'}), required=False)
+    
+    class Meta:
+        model = Instr
+        fields = ['size', 'maker', 'year_made']
+     
     def save(self, data):
-        obj = Object(user=data.get('user'), name=data.get('name'), est_price=data.get('est_price'), post=data.get('post'))
+        user = data.get('user')
+        print user
+        new_user = User.objects.get(username=user.get_username())
+        tag = [Tag.objects.get(id=int(data.get('tags'))),]
+        obj = Object(user=new_user, name=data.get('name'), est_price=data.get('est_price'), post=data.get('post'))
+        obj.save()
+        obj.tags = tag
         obj.save()
         instr = Instr(obj=obj, size=data.get('size'), maker=data.get('maker'), year_made=data.get('year_made'))
-        tags = data.get('tags')
-        for tag in tags:
-            instr.tags.add(tag)
         instr.save()
         
+    def __init__(self, *args, **kwargs):
+        super(InstrForm, self).__init__(*args, **kwargs)
+        self.fields['tags'].choices = [(x.pk, x.name) for x in Tag.objects.all()] 
+
 class SupplyForm(forms.Form):
+    
+    class Meta:
+        model = Instr
+        fields = ['maker', 'year_made', 'description']
     #Object
     name = forms.CharField(max_length=30, required=True, help_text='Optional.', widget=forms.TextInput(attrs={'placeholder': 'Supply Name', 'class':'validate'}))
     est_price = forms.IntegerField(required=True, widget=forms.NumberInput(attrs={'placeholder':0, 'class':'validate'}))
 #    date_posted = forms.DateField()
-    post = forms.BooleanField(required=True, widget=forms.CheckboxInput())
-    #Supply
-    maker = forms.CharField(max_length=30, required=True, help_text='Optional.', widget=forms.TextInput(attrs={'placeholder': 'Maker', 'class':'validate'}))
-    year_made = forms.IntegerField(required=False, widget=forms.NumberInput(attrs={'placeholder':'Year Made', 'class':'validate'}))
-    description = forms.CharField(max_length=120, required=True, help_text='Optional.', widget=forms.TextInput(attrs={'placeholder': 'Description', 'class':'validate'}))
-    tags = AutoCompleteSelectMultipleField('tags', required=False, help_text=None)
-
+    post = forms.BooleanField(widget=forms.CheckboxInput(attrs={'type':'checkbox'}))
+    tags = forms.MultipleChoiceField(widget=forms.Select(attrs={'name':'', 'multiple':'', 'placeholder':'Add Tags'}), required=False)
+    
     def save(self, data):
-        obj = Object(user=data.get('user'), name=data.get('name'), est_price=data.get('est_price'), post=data.get('post'))
+        user = data.get('user')
+        print user
+        new_user = User.objects.get(username=user.get_username())
+        tag = [Tag.objects.get(id=int(data.get('tags'))),]
+        obj = Object(user=new_user, name=data.get('name'), est_price=data.get('est_price'), post=data.get('post'))
+        obj.save()
+        obj.tags = tag
         obj.save()
         supply = Supply(obj=obj, maker=data.get('maker'), year_made=data.get('year_made'), description=data.get('description'))
-        tags = data.get('tags')
-        for tag in tags:
-            supply.tags.add(tag)
         supply.save()
-
+    
+    def __init__(self, *args, **kwargs):
+        super(SupplyForm, self).__init__(*args, **kwargs)
+        self.fields['tags'].choices = [(x.pk, x.name) for x in Tag.objects.all()] 
+        
 class MusicForm(forms.Form):
+    class Meta:
+        model = Instr
+        fields = ['title', 'composer', 'num_pages', 'year_pub']
+    
     #Object
-    name = forms.CharField(max_length=30, required=True, help_text='Optional.', widget=forms.TextInput(attrs={'placeholder': 'Title', 'class':'validate'}))
     est_price = forms.IntegerField(required=True, widget=forms.NumberInput(attrs={'placeholder':0, 'class':'validate'}))
     #date_posted = forms.DateField()
-    post = forms.BooleanField(required=True, widget=forms.CheckboxInput())
-    #Music
-    title = forms.CharField(max_length=30, required=True, help_text='Optional.', widget=forms.TextInput(attrs={'placeholder': 'Secondary Title', 'class':'validate'}))
-    composer = forms.CharField(max_length=30, required=True, help_text='Optional.', widget=forms.TextInput(attrs={'placeholder': 'Composer', 'class':'validate'}))
-    num_pages = forms.IntegerField(required=False, widget=forms.NumberInput(attrs={'placeholder':'Number of Pages', 'class':'validate'}))
-    date_pub = forms.DateField(required=False, widget=forms.DateInput(attrs={'placeholder':'Date Published', 'class':'validate'}))
-    tags = AutoCompleteSelectMultipleField('tags', required=False, help_text=None)
-
+    post = forms.BooleanField(required=True, widget=forms.CheckboxInput(attrs={'type':'checkbox'}))
+    tags = forms.MultipleChoiceField(widget=forms.SelectMultiple(attrs={'name':'', 'multiple':'', 'placeholder':'Add Tags'}), required=False)
+    
     def save(self, data):
-        obj = Object(user=data.get('user'), name=data.get('name'), est_price=data.get('est_price'), post=data.get('post'))
+        user = data.get('user')
+        new_user = User.objects.get(username=user.get_username())
+        tag = [Tag.objects.get(id=int(data.get('tags'))),]
+        obj = Object(user=new_user, name= data.get('title') + ' ' + data.get('composer'), est_price=data.get('est_price'), post=data.get('post'))
+        obj.save()
+        obj.tags = tag
         obj.save()
         music = Music(obj=obj, title=data.get('title'), composer=data.get('composer'), num_pages=data.get('num_pages'), date_pub=data.get('date_pub'))
-        tags = data.get('tags')
-        for tag in tags:
-            music.tags.add(tag)
         music.save()
-
+    
+    def __init__(self, *args, **kwargs):
+        super(MusicForm, self).__init__(*args, **kwargs)
+        self.fields['tags'].choices = [(x.pk, x.name) for x in Tag.objects.all()]
 
 '''
     first_name = forms.CharField(max_length=30, required=True, help_text='Optional.', widget=forms.TextInput(attrs={'placeholder': 'First Name', 'class':'validate'}))

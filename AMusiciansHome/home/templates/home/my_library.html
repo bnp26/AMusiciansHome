@@ -8,150 +8,424 @@
   h4{
     color: #157f75
   }
+  #modal { width: 60% !important ; max-height: 90% !important ; overflow-y: hidden !important ;}
+  
 </style>
 <h1 class="header center mahogany">My Library</h1>
+<h4 class="center mahogany">objects in my library: {{ obj_count }}</h4>
 <ul class="collection">
-    {% for object in objects %}
+    {% for object in instruments %}
     <li class="collection-item avatar">
-      <img src="http://www.schillerinstruments.com/wp-content/uploads/2016/03/trombone-valve-small-1.jpg" alt="" class="circle">
-      <span class="title">{{ object.name }}</span>
-      <p>${{ object.est_price }}<br>
-         {{ object.date_posted }}
+      <img src="https://www.antiques-delaval.com/6035-46021-thickbox/rarely-entire-violin-luthier-eperrin-son-paris-french-antique-violin-nineteenth.jpg" alt="" class="circle">
+      <span class="title">{{ object.obj.name }}</span>
+      <p>
+      
+    </p>
+      <p>${{ object.obj.est_price }}<br>
+         {{ object.obj.date_posted }}
       </p>
-      <a href="#!" class="secondary-content"><p>
+      <a class="secondary-content"><br><br>
+        <p>
+      <input type="checkbox" id="posted"/>
+      <label for="posted" style="color:black">Posted</label>
+    </p></a>
+      <a href="#modalInstr" class="secondary-content"><p>
         Edit
-        </p></a>
+        </p>
+      </a>
     </li>
     {% endfor %}
+  {% for object in supplies %}
     <li class="collection-item avatar">
-      <img src="http://media.wwbw.com/is/image/MMGS7/BTR-300-Series-Student-Bb-Trumpet-Lacquer/463683000420000-00-500x500.jpg" alt="" class="circle">
-      <span class="title">Trumpet</span>
-      <p>First Line <br>
-         Second Line
+      <img src="https://www.antiques-delaval.com/6035-46021-thickbox/rarely-entire-violin-luthier-eperrin-son-paris-french-antique-violin-nineteenth.jpg" alt="" class="circle">
+      <span class="title">{{ object.obj.name }}</span>
+      <p>
+      
+    </p>
+      <p>${{ object.obj.est_price }}<br>
+         {{ object.obj.date_posted }}
       </p>
-      <a href="#!" class="secondary-content"><p>
+      <a class="secondary-content"><br><br>
+        <p>
+      <input type="checkbox" id="posted"/>
+      <label for="posted" style="color:black">Posted</label>
+    </p></a>
+      <a href="#modalItem" class="secondary-content"><p>
         Edit
-        </p></a>
+        </p>
+      </a>
     </li>
+    {% endfor %}
+  {% for object in music %}
     <li class="collection-item avatar">
-      <img src="http://media.guitarcenter.com/is/image/MMGS7/Vision-Birch-Snare-Drum-Black-with-Black-Hardware-14x5.5/583136000001325-00-500x500.jpg" alt="" class="circle">
-      <span class="title">Snare Drum</span>
-      <p>First Line <br>
-         Second Line
+      <img src="https://www.antiques-delaval.com/6035-46021-thickbox/rarely-entire-violin-luthier-eperrin-son-paris-french-antique-violin-nineteenth.jpg" alt="" class="circle">
+      <span class="title">{{ object.obj.name }}</span>
+      <p>
+      
+    </p>
+      <p>${{ object.obj.est_price }}<br>
+         {{ object.obj.date_posted }}
       </p>
-      <a href="#!" class="secondary-content"><p>
+      <a class="secondary-content"><br><br>
+        <p>
+      <input type="checkbox" id="posted"/>
+      <label for="posted" style="color:black">Posted</label>
+    </p></a>
+      <a href="#modalMusic" class="secondary-content"><p>
         Edit
-        </p></a>
+        </p>
+      </a>
     </li>
+    {% endfor %}
   </ul>
-         
+<script src="https://code.jquery.com/jquery-2.1.1.min.js"></script>  
 <div class="row section">
   <div class="col">
     <!-- Modal Trigger -->
-    <a class="waves-effect waves-light btn modal-trigger" href="#modal1">Add Item</a>
+    <a class="waves-effect waves-light btn modal-trigger" href="#modal">Add Item</a>
   </div>
 </div>
 <!-- Modal Structure -->
-<div id="modal1" class="modal">
+<div id="modal" class="modal">
   <div class="modal-content">
     <h4 class="center">Add Item</h4>
     <div class="row">
-        <ul class="tabs">
-            <li class="tab col s3 offset-s1" style="margin-left:95px;"><a class="active" href="#create_instrument">Instrument</a></li>
-            <li class="tab col s3"><a href="#create_supply">Supply</a></li>
-            <li class="tab col s3"><a href="#create_music">Music</a></li>
-        </ul>
+        <div class="col s12">
+            <ul class="tabs">
+                <li class="tab col s3" style="margin-left:12.5%;"><a class="active" href="#create_instrument" id="instrument_tab">Instrument</a></li>
+                <li class="tab col s3"><a href="#create_supply">Supply</a></li>
+                <li class="tab col s3"><a href="#create_music">Music</a></li>
+            </ul>
+        </div>
     </div>
     <div id="create_instrument" class="row">
-        <form class="col s8" method='POST'>
+        <form class="col s8 offset-s2" method='POST'>
             {% csrf_token %}
           <div class="row">
-            <div class="input-field col s5">
+            <div class="input-field col s4">
               {{ instr_form.name }}
+              <label for="instr_name">Name</label>
             </div>
-            <div class="input-field col s5 offset-2">
-              {{ instr_form.maker }}
+            <div class="input-field col s5 offset-s1">
+            {{ instr_form.maker }}
+              <label for="maker">Maker</label>
             </div>
           </div>
           <div class="row">
             <div class="input-field col s3">
-              {{ instr_form.year_made }}
+                {{ instr_form.year_made}}
+                <label for="date_made">Date Made</label>
             </div>
-          </div>
-          <div class="row">
-            <div class="input-field col s12">
+            <div class="input-field col s3">
                 {{ instr_form.est_price }}
+                <label for="price">Estimated Price</label>
+            </div>
+            <div class="input-field col s4">
+                <div class="switch">
+                    <label>
+                    Private
+                    {{ instr_form.post }}
+                    <span class="lever"></span>
+                    Public
+                    </label>
+                </div>
+            </div>
+          </div>
+          <div class="row"> 
+                <script> 
+                $(document).ready(function() {
+                    $('select').material_select();
+                });
+                </script>
+                <div class="input-field col s6">
+                    {{ instr_form.tags }}
+                  <label for="id_tags">Tags</label>
+                </div>
+                 <div class="input-field col s3">
+                {{ instr_form.size }}
+                <label for="id_size">Size</label>
             </div>
           </div>
           <div class="row">
-            <div class="input-field col s12">
-                {{ instr_form.tags }}
-            </div>
-          </div>
-          <div class="row">
-              <button class="btn waves-effect waves-light" type="submit" name="action">Add
+              <button class="btn waves-effect waves-light" type="submit" name="instrument" action=''>Add
           </div>
         </form>
       </div>
       <div id="create_supply" class="row">
-        <form class="col s8" method='POST'>
+        <form class="col s8 offset-s2" method='POST'>
             {% csrf_token %}
           <div class="row">
-            <div class="input-field col s5">
+            <div class="input-field col s4">
               {{ supply_form.name }}
+              <label for="supply_name">Name</label>
             </div>
-            <div class="input-field col s5 offset-2">
+            <div class="input-field col s5 offset-s1">
               {{ supply_form.maker }}
+              <label for="supply_maker">Maker</label>
             </div>
           </div>
           <div class="row">
             <div class="input-field col s3">
               {{ supply_form.year_made }}
+              <label for="year_made">Year Made</label>
+            </div>
+            <div class="input-field col s3">
+              {{ supply_form.est_price }}
+              <label for="price_supply">Estimated Price</label>
+            </div>
+            <div class="input-field col s4">
+                <div class="switch">
+                    <label>
+                    Public
+                    {{ instr_form.post }}
+                    <span class="lever"></span>
+                    </label>
+                </div>
             </div>
           </div>
           <div class="row">
             <div class="input-field col s12">
-                {{ supply_form.est_price }}
+              {{ supply_form.description }}
+              <label for="id_description">Description</label>
+            </div>
+          </div>
+          <br>
+          <div class="row">
+            <div class="input-field col s6">
+              {{ supply_form.tags }}
+              <label for="tags">Tags</label>
             </div>
           </div>
           <div class="row">
-            <div class="input-field col s12">
-                {{ supply_form.tags }}
-            </div>
-          </div>
-          <div class="row">
-              <button class="btn waves-effect waves-light" type="submit" name="action">Add
+              <button class="btn waves-effect waves-light" type="submit" name="supply">Add
           </div>
         </form>
     </div>
     <div id="create_music" class="row">
-        <form class="col s8" method='POST'>
+        <form class="col s8 offset-s2" method='POST'>
             {% csrf_token %}
           <div class="row">
-            <div class="input-field col s5">
-              {{ music_form.name }}
+            <div class="input-field col s4"> 
+              {{ music_form.title }}
+              <label for="music_name">Name</label>
             </div>
-            <div class="input-field col s5 offset-2">
-              {{ music_form.maker }}
+            <div class="input-field col s5 offset-s1">
+              {{ music_form.composer }}
+              <label for="music_maker">Composer</label>
             </div>
           </div>
           <div class="row">
             <div class="input-field col s3">
-              {{ music_form.year_made }}
+              {{ music_form.year_pub }}
+              <label for="year_published">Year Published</label>
+            </div>
+            <div class="input-field col s3">
+              {{ music_form.est_price }}
+              <label for="music_price">Estimated Price</label>
+            </div>
+            <div class="input-field col s4">
+                <div class="switch">
+                    <label>
+                    Private
+                    {{ instr_form.post }}
+                    <span class="lever"></span>
+                    Public
+                    </label>
+                </div>
             </div>
           </div>
           <div class="row">
-            <div class="input-field col s12">
-                {{ music_form.est_price }}
-            </div>
-          </div>
-          <div class="row">
-            <div class="input-field col s12">
+            <div class="input-field col s6">
                 {{ music_form.tags }}
+              <label for="tags">Tags</label>
             </div>
           </div>
           <div class="row">
-              <button class="btn waves-effect waves-light" type="submit" name="action">Add
+              <input class="btn waves-effect waves-light" type="submit" name="music" value="Add">
+          </div>
+        </form>
+    </div>
+</div>
+    </div>
+<div id="modalInstr" class="modal">
+  <div class="modal-content">
+    <h4 class="center">Edit Instr</h4>
+    <div class="row">
+        <div class="col s12">
+        </div>
+    </div>
+    <div id="create_instrument" class="row">
+        <form class="col s8 offset-s2" method='POST'>
+            {% csrf_token %}
+          <div class="row">
+            <div class="input-field col s4">
+              {{ instr_form.name }}
+              <label for="instr_name">Name</label>
+            </div>
+            <div class="input-field col s5 offset-s1">
+            {{ instr_form.maker }}
+          <label for="maker">Maker</label>
+            </div>
+          </div>
+          <div class="row">
+            <div class="input-field col s3">
+                {{ instr_form.year_made}}
+                <label for="date_made">Date Made</label>
+            </div>
+            <div class="input-field col s3">
+                {{ instr_form.est_price }}
+                <label for="price">Estimated Price</label>
+            </div>
+            <div class="input-field col s4">
+                <div class="switch">
+                    <label>
+                    Private
+                    {{ instr_form.post }}
+                    <span class="lever"></span>
+                    Public
+                    </label>
+                </div>
+            </div>
+          </div>
+          <div class="row"> 
+                <script> 
+                $(document).ready(function() {
+                    $('select').material_select();
+                });
+                </script>
+                <div class="input-field col s6">
+                    {{ instr_form.tags }}
+                  <label for="id_tags">Tags</label>
+                </div>
+                 <div class="input-field col s3">
+                {{ instr_form.size }}
+                <label for="id_size">Size</label>
+            </div>
+          </div>
+          <div class="row">
+              <button class="btn waves-effect waves-light" type="submit" name="instrument" action=''>Add
+          </div>
+        </form>
+    </div>
+</div>
+<div id="modalItem" class="modal">
+  <div class="modal-content">
+    <h4 class="center">Edit Item</h4>
+    <div class="row">
+        <div class="col s12">
+        </div>
+    </div>
+    <div id="create_instrument" class="row">
+        <form class="col s8 offset-s2" method='POST'>
+            {% csrf_token %}
+          <div class="row">
+            <div class="input-field col s4">
+              {{ instr_form.name }}
+              <label for="instr_name">Name</label>
+            </div>
+            <div class="input-field col s5 offset-s1">
+            {{ instr_form.maker }}
+          <label for="maker">Maker</label>
+            </div>
+          </div>
+          <div class="row">
+            <div class="input-field col s3">
+                {{ instr_form.year_made}}
+                <label for="date_made">Date Made</label>
+            </div>
+            <div class="input-field col s3">
+                {{ instr_form.est_price }}
+                <label for="price">Estimated Price</label>
+            </div>
+            <div class="input-field col s4">
+                <div class="switch">
+                    <label>
+                    Private
+                    {{ instr_form.post }}
+                    <span class="lever"></span>
+                    Public
+                    </label>
+                </div>
+            </div>
+          </div>
+          <div class="row"> 
+                <script> 
+                $(document).ready(function() {
+                    $('select').material_select();
+                });
+                </script>
+                <div class="input-field col s6">
+                    {{ instr_form.tags }}
+                  <label for="id_tags">Tags</label>
+                </div>
+                 <div class="input-field col s3">
+                {{ instr_form.size }}
+                <label for="id_size">Size</label>
+            </div>
+          </div>
+          <div class="row">
+              <button class="btn waves-effect waves-light" type="submit" name="instrument" action=''>Add
+          </div>
+        </form>
+    </div>
+</div>
+<div id="modalMusic" class="modal">
+  <div class="modal-content">
+    <h4 class="center">Edit Music</h4>
+    <div class="row">
+        <div class="col s12">
+        </div>
+    </div>
+    <div id="create_instrument" class="row">
+        <form class="col s8 offset-s2" method='POST'>
+            {% csrf_token %}
+          <div class="row">
+            <div class="input-field col s4">
+              {{ instr_form.name }}
+              <label for="instr_name">Name</label>
+            </div>
+            <div class="input-field col s5 offset-s1">
+            {{ instr_form.maker }}
+          <label for="maker">Maker</label>
+            </div>
+          </div>
+          <div class="row">
+            <div class="input-field col s3">
+                {{ instr_form.year_made}}
+                <label for="date_made">Date Made</label>
+            </div>
+            <div class="input-field col s3">
+                {{ instr_form.est_price }}
+                <label for="price">Estimated Price</label>
+            </div>
+            <div class="input-field col s4">
+                <div class="switch">
+                    <label>
+                    Private
+                    {{ instr_form.post }}
+                    <span class="lever"></span>
+                    Public
+                    </label>
+                </div>
+            </div>
+          </div>
+          <div class="row"> 
+                <script> 
+                $(document).ready(function() {
+                    $('select').material_select();
+                });
+                </script>
+                <div class="input-field col s6">
+                    {{ instr_form.tags }}
+                  <label for="id_tags">Tags</label>
+                </div>
+                 <div class="input-field col s3">
+                {{ instr_form.size }}
+                <label for="id_size">Size</label>
+            </div>
+          </div>
+          <div class="row">
+              <button class="btn waves-effect waves-light" type="submit" name="instrument" action=''>Add
           </div>
         </form>
     </div>
@@ -160,6 +434,7 @@
 <script>
 $(document).ready(function() {
   $('.modal').modal();
+  $("#instrument_tab").select();
 });
 </script>
 {% endblock %}

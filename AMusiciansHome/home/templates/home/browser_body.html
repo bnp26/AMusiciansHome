@@ -1,0 +1,78 @@
+<div id="browser_main">
+    <div id="instruments" class="col s12 ">
+        {% for instr in instruments %}
+         <div class="col s4">
+         <div class="card horizontal">
+          <div class="card-image">
+            <img src="http://lorempixel.com/100/190/nature/6">
+          </div>
+          <div class="card-stacked" width:400px>
+            <div class="card-content">
+              <p>{{ instr.year_made }} {% if item.maker != 'Unknown' or item.maker != 'N/A' %}{{ item.maker }}{% endif %} {{ instr.obj.name }}</p>
+              <p>
+                {{ instr.obj.est_price }}
+              </p>
+              <p>
+                 {{ instr.size }}
+              </p>
+               <p>
+                Posted {{ instr.date_posted }}
+              </p>
+            </div>
+          </div>
+        </div>
+       </div>
+        {% endfor %}
+    </div>
+      <div id="music" class="col s12">
+        {% for musi in music %}
+       <div class="col s4">
+        <div class="card horizontal">
+          <div class="card-image">
+            <img src="http://lorempixel.com/100/190/nature/6">
+          </div>
+          <div class="card-stacked" width:400px>
+            <div class="card-content">
+              <p>{{ musi.title }} ({{ musi.num_pages }}) </p>
+              <p>
+                Published {{ musi.year_pub }} by {{ musi.composer }}
+              </p>
+              <p>
+                {{ musi.obj.est_price }}
+              </p>
+              <p>
+                Posted {{ musi.obj.date_posted }}
+              </p>
+            </div>
+          </div>
+        </div>
+        </div>
+        {% endfor %}
+      </div>
+      <div id="items" class="col s12">
+        {% for item in supplies %}
+        <div class="col s4">
+        <div class="card horizontal">
+          <div class="card-image">
+            <img src="http://lorempixel.com/100/190/nature/6">
+          </div>
+          <div class="card-stacked">
+            <div class="card-content">
+              <p>{{ item.year_made }} {% if item.maker != 'Unknown' or item.maker != 'N/A' %}{{ item.maker }}{% endif %} {{ item.obj.name }}</p>
+              <p>
+                {{ item.obj.est_price }}
+              </p>
+              <p>
+                 {{ item.description }}
+              </p>
+              <p>
+                Posted {{ item.obj.date_posted }}
+              </p>
+            </div>
+          </div>
+        </div>
+        </div>
+        {% endfor %}
+      </div>
+    </div>
+</div>

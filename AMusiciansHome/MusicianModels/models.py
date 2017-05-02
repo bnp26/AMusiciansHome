@@ -1,6 +1,6 @@
 from django.contrib.auth.models import User
 from django.db import models
-
+from django.utils import timezone
 # Create your models here.
 
 class Musician(models.Model):
@@ -18,6 +18,7 @@ class Musician(models.Model):
         return musician
 
 class Tag(models.Model):
+    id = models.AutoField(primary_key=True)
     name = models.CharField(max_length=30, unique=True)
     tag_type = models.CharField(max_length=15)
 
@@ -28,18 +29,25 @@ class Tag(models.Model):
         ordering = ('name',)
 
 class Object(models.Model):
+    id = models.AutoField(primary_key=True)
     name = models.CharField(max_length=30)
     user = models.ForeignKey(User, on_delete=models.CASCADE)
     est_price = models.IntegerField()
     date_posted = models.DateField(auto_now=True)
     post = models.BooleanField()
-    tags = models.ManyToManyField(Tag, blank=True)
+    tags = models.ManyToManyField(Tag)
     
     def __str__(self):              # __unicode__ on Python 2
         return self.name
     
     class Meta:
         ordering = ('name',)
+    
+#     @classmethod
+#     def create(cls, c_name, c_user, c_est_price, c_post, c_tags):
+#         time = timezone.now()
+#         obj = cls(name=c_name, user=c_user, est_price=c_est_price, post=c_post, tags=c_tags, date_posted=time)
+#         return obj
 
 class Instr(models.Model):
     obj = models.ForeignKey(Object, on_delete=models.CASCADE)
